@@ -1,0 +1,152 @@
+
+        {{>pageInfo}}
+        <div id="shop-section">
+            <div id="shop-section-inner" class="inner">
+                <div class="product-section" >
+                    <div id= "categories-section" class="row">
+                        <div class="category">
+                            <p> <span>12</span> product found of 30 </p>
+                        </div>
+                        <div class="category">
+                           <a href="">
+                            <i class="fas fa-th"></i>
+                           </a>
+                        </div>
+                        <div class = "category">
+                            <a href="">
+                                <i class="fas fa-th-list"></i>
+                            </a>
+                        </div>
+                        
+                        <select name="" id="" class="category">
+                            <option value="">sort by default</option>
+                            <option value="">sort by popularity</option>
+                            <option value="">sort by rated</option>
+                            <option value="">sort by latest</option>
+                            <option value="">sort by high price</option>
+                            <option value="">sort by low price</option>
+                        </select>
+                        
+                    </div>
+        
+            
+                    <div class="row product-div">
+                        {{#each plant}}
+                        <div class="product">
+                            <a href="/shop/{{this.name}}">
+                                <img src={{this.src.[0]}} alt="" height="250">
+                            </a>
+                            <div class="hide">
+                                <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                            </div>
+                            <div class="product-text">
+                                <p>{{this.name}}</p>
+                                <h3>${{this.price}}</h3>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div id= "categories-section" class="row">
+                        <div class="category">
+                            <a href="">1</a>
+                        </div>
+                        <div class="category">
+                           <a href="">2</a>
+                        </div>
+                        <div class = "category">
+                            <a href="">3</a>
+                        </div>
+                        <div class = "category">
+                            <a href=""><i class="fas fa-angle-double-right"></i></a>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div id="filter-section">
+                    <div id="filter">
+                        <div class="filter">
+                            <form>
+                                <input type="text" name="search" placeholder="Search..">
+                              </form>
+                        </div>
+                        <div class="filter">
+                            <div class="filter-criteria">
+                                <h2> categories </h2>
+                                <ul>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> all <span>(65)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> bonsai <span>(12)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> house plants <span>(22)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> indoor living <span>(19)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> perenials <span>(17)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> plant for gift <span>(01)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> garden tools <span>(12)</span> </a> </li>
+                                </ul>
+                            </div>
+    
+                            <div class="filter-criteria">
+                                <h2> color </h2>
+                                <ul>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> all <span>(65)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> gold <span>(12)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> green <span>(22)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> white <span>(13)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> black <span>(10)</span> </a> </li>
+                                </ul>
+                            </div>
+    
+                            <div class="filter-criteria">
+                                <h2> price filter </h2>
+                                <div>
+                                    <input type="range">
+                                </div>
+                            </div>
+    
+                            <div class="filter-criteria">
+                                <h2> popular tags </h2>
+                                <div id= "categories-section" class="row">
+                                    <div class="category">
+                                        <a href="">fashion</a>
+                                    </div>
+                                    <div class="category">
+                                       <a href="">organic</a>
+                                    </div>
+                                    <div class = "category">
+                                        <a href="">old fashion</a>
+                                    </div>
+                                    <div class = "category">
+                                        <a href="">man</a>
+                                    </div>
+                                    <div class = "category">
+                                        <a href="">fashion</a>
+                                    </div>
+                                    <div class = "category">
+                                        <a href="">dress</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="banner-section">
+                        <div class="banner center" >
+                            <img src="images\banner new 4.jpg" alt="">
+                            <div class="banner-text">
+                                <h3> new collection</h3>
+                                <h2>plant port</h2>
+                                <a href="" class="btn">shop now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        

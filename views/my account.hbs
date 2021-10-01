@@ -1,0 +1,94 @@
+
+        {{>pageInfo}}
+        <div id="account-section">
+            <div class="inner">
+                <div role ="tablist" id="account-tab-list">
+                    <a href="" role="tab" aria-controls="orders" class="active">orders</a>
+                    <a href="" role="tab" aria-controls="addresses" class="">addresses</a>
+                    <a href="" role="tab" aria-controls="account-details" class="">account details</a>
+                    <a href="login register .html" role=""  class="">logout</a>
+                </div>
+
+                <div id="orders" role="tabpanel">
+                    <h2>my orders</h2>
+
+                    <div id="table">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                  <td>order</td>
+                                  <td>date</td>
+                                  <td>status</td>
+                                  <td>total</td>
+                                  <td></td>
+                              </tr>
+                            </thead>
+                             <tbody>
+                              <tr>
+                                  <td class="order"> #5678 </td>
+                                  <td class="date"> mar 27, 2021</td>
+                                  <td class="staus"> on hold </td>
+                                  <td class="cost"> $23.45 </td>
+                                  <td class="view"><a href="" class="btn b "> view </a></td>
+                             </tr>
+                             <tr>
+                                  <td class="order"> #5678 </td>
+                                  <td class="date"> mar 27, 2021</td>
+                                  <td class="staus"> on hold </td>
+                                  <td class="cost"> $23.45 </td>
+                                  <td class="view"><a href="" class="btn b "> view </a></td>
+                             </tr>
+                             </tbody>
+                             
+                         </table>
+                    </div>
+                </div>
+
+                <div id="addresses" role="tabpanel" hidden>
+                    <p>The following addresses will be used
+                        on the checkout page by default</p>
+                     
+                    <div id="default-add">
+                        <div class="add">
+                            <h2>billing address</h2>
+                            <p>1234 Heaven Stress, Beverly Hill 
+                                OldYork UnitedState of Lorem </p>
+                        </div>
+
+                        <div class="add">
+                            <h2>shipping address</h2>
+                            <p>1234 Heaven Stress, Beverly Hill 
+                                OldYork UnitedState of Lorem </p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div id="account-details" role="tabpanel" hidden>
+                    <form action="" class="form">
+                        <label for="">first name</label>
+                        <input type="text">
+
+                        <label for="">last name</label>
+                        <input type="text">
+
+                        <label for="">email</label>
+                        <input type="email" >
+
+                        <label for="">current password</label>
+                        <input type="password">
+
+                        <label for="">new password</label>
+                        <input type="password" >
+
+                        <label for=""> confirm new password</label>
+                        <input type="password">
+
+                        <input type="submit" value="save changes" class="btn">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+       

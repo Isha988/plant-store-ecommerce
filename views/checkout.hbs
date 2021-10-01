@@ -1,0 +1,188 @@
+
+        {{>pageInfo}}
+        <main>
+            <div id="return">
+                <div class="case inner">
+                    <i class="fas fa-shopping-cart" ></i> 
+                    <div class="text">
+                        Returning costumer?
+                    <span class="checkout-open">Click here to login</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="coupon">
+                <div class="case inner">
+                    <i class="fas fa-shopping-cart" ></i> 
+                    <div class="text">  
+                        Have a coupon?
+                        <span class="checkout-open">Click here to enter your code</span>
+                    </div>
+            </div>
+
+            <div id="checkout-section" class="inner">
+                <div id="billing">
+                   <div id="billing-details">
+                        <h2>billing details</h2>
+                        <form action="" class="form">
+                            <label for="">country*</label>
+                            <select name="" id="" required>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">australia</option>
+                                <option value="london">london</option>
+                            </select>
+
+                            <label for=""> first name*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> last name*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> company name</label>
+                            <input type="text">
+                            
+                            <label for=""> address*</label>
+                            <input type="text" required="required" placeholder="street">
+                            <input type="text" placeholder="appartment, suite, unit etc. (optional)">
+
+                            <label for=""> town / city*</label>
+                            <input type="text" required="required">
+
+                            <label for=""> state / country*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> postcode / zip*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for="">email address*</label>
+                            <input type="email" required="required" class="input-small">
+
+                            <label for="">phone*</label>
+                            <input type="text" pattern="[6789][0-9]{9}"  required="required" class="input-small">
+
+                        </form>
+                   </div>
+
+                   <div id="create-account">
+                       <div>
+                           <input type="checkbox" name="" id="" class="checkout-open" >
+                            Create an account?
+                       </div>
+                       <div class="hide checkout-card">
+                        <p>
+                            Create an account by entering the information below. 
+                            If you are a returning customer please login at the top of the page.
+                        </p>
+                        <form action="" class="form">
+                            <label for="">account password</label>
+                            <input type="password" name="" id="" placeholder="password" >
+                        </form>
+                       </div>
+
+                   </div>
+
+
+                   <div id="another-address">
+                       <h2>ship to a different addresss
+                            <input type="checkbox" name="" id="" class="checkout-open">
+                        </h2>
+                        <form action="" class="form hide checkout-card">
+                            <label for="">country*</label>
+                            <select name="" id="" required>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">london</option>
+                                <option value="london">australia</option>
+                                <option value="london">london</option>
+                            </select>
+
+                            <label for=""> first name*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> last name*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> company name</label>
+                            <input type="text">
+                            
+                            <label for=""> address*</label>
+                            <input type="text" required="required" placeholder="street">
+                            <input type="text" placeholder="appartment, suite, unit etc. (optional)">
+
+                            <label for=""> town / city*</label>
+                            <input type="text" required="required">
+
+                            <label for=""> state / country*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for=""> postcode / zip*</label>
+                            <input type="text" required="required" class="input-small">
+
+                            <label for="">email address*</label>
+                            <input type="email" required="required" class="input-small">
+
+                            <label for="">phone*</label>
+                            <input type="text" pattern="[6789][0-9]{9}"  required="required" class="input-small">
+
+                        </form>
+                   </div>
+
+                   <div id="notes">
+                       <form action="" class="form">
+                           <label for=""> order notes</label>
+                           <textarea name="" id="" cols="30" rows="5" placeholder="notes about your order, e.g. special notes for delivery."></textarea>
+                       </form>
+                   </div>
+                </div>
+
+                <div id="payment-section">
+                    <h2>your order</h2>
+                    <div id="table">
+                        <table>
+                            <tr>
+                                <th>product</th>
+                                <th>total</th>
+                            </tr>
+    
+                            <tr>
+                                <td>vestibulum suscipit <span>x1</span></td>
+                                <td class="rate">$165.0</td>
+                            </tr>
+    
+                            <tr>
+                                <td>vestibulum suscipit <span>x1</span></td>
+                                <td class="rate">$165.0</td>
+                            </tr>
+    
+                            <tr>
+                                <td class="bold">cart subtotal</td>
+                                <td class="rate">$165.0</td>
+                            </tr>
+    
+                            <tr>
+                                <td class="bold">order total</td>
+                                <td id="charges">$165.0</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="transaction">
+                        <a href=""> direct bank transfer</a>
+                        <p>
+                            Make your payment directly into our bank account. 
+                            Please use your Order ID as the payment reference. 
+                            Your order won’t be shipped until the funds have cleared in our account
+                        </p>
+                        <a href=""> cheque payment</a>
+                        <a href=""> PayPal</a>
+                        <div class="btn b">place order</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        

@@ -1,0 +1,36 @@
+        {{>pageInfo}}
+       <div id="wishlist" class="product-table">
+           <div class="inner">
+               {{#if wishlist}}
+               <table class="table">
+                  <thead>
+                    <tr>
+                        <td>remove</td>
+                        <td>image</td>
+                        <td>product</td>
+                        <td>unit price</td>
+                        <td>stock status</td>
+                        <td>add to cart</td>
+                    </tr>
+                  </thead>
+                   <tbody>
+                    {{#each wishlist.items }}
+                    <tr>
+                        <td class="remove"> <a href=""> x </a> </td>
+                        <td class="img"> <a href=""> <img src={{this.img}} alt=""> </a></td>
+                        <td class="name"> <a href="" >{{this.name}}</a> </td>
+                        <td class="price"> ${{this.price}} </td>
+                        <td class="stock"> in stock </td>
+                        <td class="cart"><a href="#" onclick="addToCart('{{this.name}}')" class="btn b"> add to cart</a></td>
+                   </tr>
+                   {{/each}}
+                   </tbody>
+                   
+               </table>
+               {{else}} 
+                {{>noItem}}
+               {{/if}}
+           </div>
+       </div>
+   
+       

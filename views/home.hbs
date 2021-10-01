@@ -1,0 +1,341 @@
+
+    {{#if success}}
+            {{#each success}}
+                <p class='msg success'>{{this}}</p>
+            {{/each}}
+          {{/if}}
+
+          {{!-- {{#if messages}}
+            {{messages}}
+          {{/if}} --}}
+             {{messages locals}}
+
+        {{#if user}}
+            <p class='msg success'>hello {{user.firstName}}</p>
+        {{/if}}
+
+
+            <div id="crousel">
+                <div class="hide">
+                    <i class="fas fa-angle-double-left" onclick="currentCrousel(index-=1)"></i>
+                 </div>
+    
+                 <div class="crousel-page inner">
+                    <div class="image">
+                        <div class="after"></div>
+                        <img src="images\crousel 1.png" alt="">
+                    </div>
+                    <div class="crousel-text">
+                        <h2>
+                            65% off
+                        </h2>
+                        <h1>
+                            new plant
+                        </h1>
+                        <p>
+                            pronia, with 100% natural, organic & plant shop
+                        </p>
+                        <a href="" class="btn">discover now</a>
+                    </div>
+                 </div>
+                
+                <div class="crousel-page inner">
+                    <div class="image">
+                        <div class="after"></div>
+                        <img src="images\crousel 2.png" alt="">
+                    </div>
+                    <div class="crousel-text">
+                        <h2>
+                            65% off
+                        </h2>
+                        <h1>
+                            new plant
+                        </h1>
+                        <p>
+                            pronia, with 100% natural, organic & plant shop
+                        </p>
+                        <a href=""  class="btn">discover now</a>
+                    </div>
+                </div>
+                
+                <div id="navigator" class="hide-med">
+                    <span class="dot" onclick="currentCrousel(index = 0)"></span>   
+                    <span class="dot" onclick="currentCrousel(index = 1)"></span>     
+                </div>
+
+                <div class="hide">
+                    <i class="fas fa-angle-double-right" onclick="currentCrousel(index+=1)"> </i>
+                </div>
+            </div>
+
+
+    <div id="service-section">
+        <div class="row inner">
+            <div class="service">
+                <i class="fas fa-shipping-fast"></i>
+            <div class="service-text">
+                <h3>free shipping</h3>
+                <p>capped at $319 per order</p>
+            </div>
+        </div>
+        <div class="service">
+                <i class="fas fa-credit-card"></i>
+            <div class="service-text">
+                <h3> safe payment</h3>
+                <p>With our payment gateway</p>
+            </div>
+        </div>
+        <div class="service">
+            <i class="fas fa-hand-holding-heart"></i>              
+            <div class="service-text">
+                <h3>Best services</h3>
+                <p> friendly and super services</p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+    <div class="product-section inner" >
+        <h1 class="heading"> our products</h1>
+        <div id= "categories-section" class="row">
+            <a href="" class="category active" role="tab" aria-controls="featured" >
+                featured
+            </a>
+            <a href = "" class="category" role="tab" aria-controls="bestSeller">
+                bestseller
+            </a>
+            <a  href="" class = "category" role="tab" aria-controls="latest">
+                latest
+            </a>
+        </div>
+
+        <div id="featured"  class="row product-div" role="tabpanel" >
+                {{#each plant}}
+                    {{#if (display this 'featured')}}
+                        <div class="product">
+                        <a href="/shop/{{this.name}}">
+                            <img src={{this.src.[0]}} alt="" height="250">
+                        </a>
+                            <div class="hide">
+                                <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                            </div>
+                            <div class="product-text">
+                                <p>{{this.name}}</p>
+                                <h3>${{this.price}}</h3>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+        </div>
+        <div id="bestSeller"  class="row product-div" role="tabpanel" hidden>
+                {{#each plant}}
+                    {{#if (display this 'best seller')}}
+                        <div class="product">
+                        <a href="/shop/{{this.name}}">
+                            <img src={{this.src.[0]}} alt="" height="250">
+                        </a>
+                            <div class="hide">
+                                <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                 <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                            </div>
+                            <div class="product-text">
+                                <p>{{this.name}}</p>
+                                <h3>${{this.price}}</h3>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+        </div>
+        <div id="latest"  class="row product-div" role="tabpanel" hidden>
+                {{#each plant}}
+                    {{#if (display this 'latest')}}
+                        <div class="product">
+                        <a href="/shop/{{this.name}}">
+                            <img src={{this.src.[0]}} alt="" height="250">
+                        </a>
+                            <div class="hide">
+                                <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                 <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                            </div>
+                            <div class="product-text">
+                                <p>{{this.name}}</p>
+                                <h3>${{this.price}}</h3>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+        </div>
+    </div>
+
+    <div id="banner-section" >
+        <div id ="banner-inner" class="row inner">
+            <div class="banner" >
+                <img src="images\banner new 2.jpg" alt="">
+                <div class="banner-text">
+                    <h3> collection of cactus</h3>
+                    <h2>pottery pot & <br> plants</h2>
+                    <a href="" class="btn">shop now</a>
+                </div>
+            </div>
+            <div class="banner center" >
+                <img src="images\banner new 4.jpg" alt="">
+                <div class="banner-text">
+                    <h3> new collection</h3>
+                    <h2>plant port</h2>
+                    <a href="" class="btn">shop now</a>
+                </div>
+            </div>
+            <div class="banner center" >
+                <img src="images\banner new 3.jpg" alt="">
+                <div class="banner-text">
+                    <h3> new collection</h3>
+                    <h2> plant port</h2>
+                    <a href="" class="btn">shop now</a>
+                </div>
+            </div>
+            <div class="banner" >
+                <img src="images\banner new 1.jpg" alt="">
+                <div class="banner-text">
+                    <h3> collection of cactus</h3>
+                    <h2> hanging pots & <br> plant</h2>
+                    <a href="" class="btn">shop now</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+<div class="product-section inner" id="new">
+    <h1 class="heading">new products</h1>
+    <p class="sub">Contrary to popular belief, Lorem Ipsum is not simply random text. 
+        It has roots <br> in a piece of classical Latin literature </p>
+
+    <div class="row-2 product-div">
+        {{#each plant}}
+            {{#if (display this 'new')}}
+                <div class="product">
+                    <a href="/shop/{{this.name}}">
+                        <img src={{this.src.[0]}} alt="" height="250">
+                    </a>
+                    <div class="hide">
+                        <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                         <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                        <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                    </div>
+                    <div class="product-text">
+                        <p>{{this.name}}</p>
+                        <h3>${{this.price}}</h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+
+<div id="testimonial-section">
+    <div id="testimonial-header">
+        <h1 class="heading">what say client</h1>
+        <p class="sub">Contrary to popular belief, Lorem Ipsum is not simply random text. 
+            It has roots <br> in a piece of classical Latin literature </p>
+    </div>
+    <div id="testimonial" class="row-2 inner">
+        <div class="testimonial">
+            <div class="circle">
+                <i class="fas fa-quote-left"></i>
+            </div>
+            <div class="profile">
+                <img src="images/profile 1.jpg" alt="">
+                <h3>alferd william</h3>
+                <p>client</p>
+            </div>
+            <div class="review">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+            </div>
+        </div>
+        <div class="testimonial">
+           <div class="circle">
+                <i class="fas fa-quote-left"></i>
+            </div>
+            <div class="profile">
+                <img src="images/profile 2.jpg" alt="">
+                <h3>alferd william</h3>
+                <p>client</p>
+            </div>
+            <div class="review">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+            </div>
+        </div>
+        <div class="testimonial">
+            <div class="circle">
+                <i class="fas fa-quote-left"></i>
+            </div>
+            <div class="profile">
+                <img src="images/profile 3.jpg" alt="">
+                <h3>alferd william</h3>
+                <p>client</p>
+            </div>
+            <div class="review">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+            </div>
+        </div>
+    </div>
+    <div id="testimonal-nav">
+        <span class="dot"></span>   
+        <span class="dot"></span>
+        <span class="dot"></span>          
+    </div>
+    </div>
+</div>
+
+<div id="brand-section">
+       <div class="inner">
+        <div id="brand" class="row-2">
+            <a href="home.html" class="brand">
+                <img src="images/brand 1.png" alt="">
+            </a>
+            <a href="home.html" class="brand">
+                <img src="images/brand 2.png" alt="">
+            </a>
+            <a href="home.html" class="brand">
+                <img src="images/brand 3.png" alt="">
+            </a>
+            <a href="home.html" class="brand">
+                <img src="images/brand 4.png" alt="">
+            </a>
+            <a href="home.html" class="brand">
+                <img src="images/brand 5.png" alt="">
+            </a>
+        </div>
+    </div>
+       </div>
+</div>
+

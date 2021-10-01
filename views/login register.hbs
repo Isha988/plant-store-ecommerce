@@ -1,0 +1,49 @@
+
+        {{>pageInfo}}
+        <div id="forms">
+            <div class="inner">
+                <div role ="tablist" id="tab-list" class="row">
+                    <a href="" role="tab" aria-controls="login-form" class="active">login</a>
+                    <a href="" role="tab" aria-controls="register-form" class="">register</a>
+                </div>
+
+                <div id="login-form" class="signup" role="tabpanel">
+                    <h2>login</h2>
+                    <form action="/login" class="form" method="POST">
+                        <label for="" >email address</label>
+                        <input type="email" placeholder="email address"  name="email" required>
+                        <label for="" >password</label>
+                        <input type="password" placeholder="password" name ="password" required>
+                        <label for="" class="extra">
+                            <input type="checkbox" name="" id="">
+                            remember me</label>
+                        <a href="" class="extra">forgot password?</a>
+                        <input type="submit" value="login" class="btn">
+                    </form>
+                </div>
+
+                <div id="register-form" class="signup" role="tabpanel" hidden>
+                    <h2>register</h2>
+                    <form class="form" action="/register" method="POST">
+                        <label for="">first name</label>
+                        <input type="text" placeholder="first name" name="firstName" required>
+
+                        <label for="">last name</label>
+                        <input type="text" placeholder="last name"  name="lastName">
+
+                        <label for="" >email address</label>
+                        <input type="email" placeholder="email address" name="email" required >
+
+                        <label for="" >password</label>
+                        <input type="password" placeholder="password" name="password" required>
+
+                        <label for="" >confirm password</label>
+                        <input type="password" placeholder="confirm password" name="confirmPassword" required>
+        
+                        <input type="submit" value="register" class="btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+       

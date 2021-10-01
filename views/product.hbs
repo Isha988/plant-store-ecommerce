@@ -1,0 +1,304 @@
+    {{>pageInfo}}
+   {{#each product}}
+        <div id="purchase-section">
+            <div id="purchase-section-inner" class="inner">
+                <div id="product-images">
+                    <a  href="" id="product-image-single">
+                        <img src={{this.src.[0]}}  alt="">
+                    </a>
+                    <div id="product-image-grid" class="row-2">
+                        {{#each this.src}}
+                        <a href="" class="grid-image">
+                            <img src={{this}} alt="" height="100">
+                        </a>
+                        {{/each}}
+                    </div>
+                </div>
+
+                <div id="product-content">
+                    <div id="product-info">
+                        <p>{{this.name}}</p>
+                        <h3>${{this.price}}</h3>
+                        <div id="rating">
+                            <div id="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span>[1 review]</span>
+                        </div>
+                        
+                    </div>
+
+                    <div id="product-selector">
+                        <div class="selector">
+                            <span class="selector-field">color</span>
+                            <div class="select">
+                                <span class="value"> black & white
+                                     <i class="fas fa-caret-down"></i>
+                                </span>
+                                <ul hidden>
+                                    <li class="option"> black & white</li>
+                                    <li class="option"> blue </li>
+                                    <li class="option"> green </li>
+                                    <li class="option"> red </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="selector">
+                            <span class="selector-field">size</span>
+                            <div class="select">
+                                <span class="value"> medium 
+                                    <i class="fas fa-caret-down"></i >
+                                </span>
+                                <ul hidden>
+                                    <li class="option selected"> medium </li>
+                                    <li class="option"> large </li>
+                                    <li class="option"> small </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="short-discription" >
+                        <p> {{this.shortDesc}} </p>
+                    </div>
+
+                    <div id="quantity-and-btn" class="row">
+                        <div id="quantity">
+                            <input type="text" value="1" patter="[1-9]+[0-9]*">
+                            <div id="decrease">
+                                <i class="fas fa-minus"></i>
+                            </div>
+                            <div id="increase">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+
+                        <button class="btn" id="cart" onclick="addToCart('{{this.name}}')">add to cart</button>
+                        
+                        <i id="wishlist" class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                        
+                        <i id="compare" class="fas fa-sync-alt"></i>
+                        
+                    </div>
+
+                    <div id="service-section" class="row-2">
+                            <div class="service">
+                                <i class="fas fa-shipping-fast"></i>
+                            <div class="service-text">
+                                <p>free <br> shipping</p>
+                            </div>
+                        </div>
+                        <div class="service">
+                                <i class="fas fa-credit-card"></i>
+                            <div class="service-text">
+                                <p> safe <br> payment</p>
+                            </div>
+                        </div>
+                        <div class="service">
+                            <i class="fas fa-hand-holding-heart"></i>              
+                            <div class="service-text">
+                                <p>Best <br> services</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="extra-link">
+                        <span>SKU:</span> 
+                        <a href="">ch-256xl</a>
+                    </div>
+
+                    <div class="extra-link">
+                        <span>categories:</span> 
+                        {{#each this.categories}}
+                            <a href="">{{this}},</a>
+                        {{/each}}
+                    </div>
+
+                    <div class="extra-link">
+                        <span>tags:</span> 
+                         {{#each this.tag}}
+                            <a href="">{{this}},</a>
+                        {{/each}}
+                    </div>
+
+                    <div class="extra-link">
+                        <span>share:</span> 
+                        <a href=""> <i class="fab fa-pinterest-p"></i> </a>
+                        <a href=""> <i class="fab fa-twitter"> </i></a>
+                        <a href=""> <i class="fab fa-tumblr"></i> </a>
+                        <a href=""> <i class="fab fa-dribbble"> </i></a>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="info-section">
+            <div class="inner" id="info-section-inner">
+                <div role ="tablist" class="row" id="tab-list">
+                  <a href="" role="tab" aria-controls="information" id="info-tab" class=""> information </a>
+                  <a href="" role="tab" aria-controls="description" id="des-tab" class="active"> description</a>
+                  <a href="" role="tab" aria-controls="review" id="rv-tab"  class=""> reviews<span>(3)</span> </a>
+                </div>
+                <div id="information" role="tabpanel" tabindex="0" aria-labelledby="info-tab" hidden>
+                    {{#each this.information}}
+                        <div class="para">
+                        <h2>{{this.name}}</h2>
+                        <p>{{this.info}}</p>
+                        </div>
+                    {{/each}}
+                </div>
+    
+                <div id="description" role="tabpanel" tabindex="0" aria-labelledby="des-tab">
+                    <p>{{this.longDesc}} </p>
+                </div>
+    
+                <div id="review" role="tabpanel" tabindex="0" aria-labelledby="rv-tab" hidden>
+                    <div id="comment">
+                        <h1>Comments <span>(03)</span></h1>
+                        <div class="comment row">
+                            <img src="images/comment 1.jpg" alt="">
+                            <div class="user-data">
+                                <h2> Donald Chavez </h2> 
+                                <p class="sub">21 July 2021</p>
+                                <p class="review">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                                    Soluta consequuntur quaerat architecto ipsa error dolore.
+                                </p>
+                                <a href="" class="btn">reply</a>
+                            </div>
+                        </div>
+    
+                        <div class="comment row">
+                            <img src="images/comment 2.jpg" alt="">
+                            <div class="user-data">
+                                <h2> Donald Chavez </h2> 
+                                <p class="sub">21 July 2021</p>
+                                <p class="review">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                     Error consectetur inventore aliquid sunt debitis
+                                      omnis nam dolor nulla dicta maiores.
+                                </p>
+                                <a href="" class="btn">reply</a>
+                            </div>
+                        </div>
+    
+                        <div class="comment row">
+                            <img src="images/comment 3.jpg" alt="">
+                            <div class="user-data">
+                                <h2> Donald Chavez </h2> 
+                                <p class="sub">21 July 2021</p>
+                                <p class="review">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                     Tenetur distinctio id reiciendis, voluptatum temporibus
+                                      alias totam impedit vel?
+                                </p>
+                                <a href="" class="btn">reply</a>
+                            </div>
+                        </div>
+                  </div>
+
+                  <div id="post-comment">
+                    <h1>Leave a comment</h1>
+                    <form id="comment" action="" class="form">
+                        <input type="text" placeholder="your name*" pattern="[A-Za-z]+[A-Za-z]*" required="required">
+                        <input type="email" placeholder="your email*"  required="required">
+                        <input type="text" placeholder="subject (optional)">
+                        <textarea name="" id="" cols="30" rows="5" placeholder="message"   required="required"></textarea>
+                        <input type="submit" value="post comment" class="btn formBtn">
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+        <div class="product-section inner" id="new">
+            <h1 class="heading"> related products </h1>
+            <p class="sub">Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                It has roots <br> in a piece of classical Latin literature </p>
+        
+            <div  class="row-2 product-div">
+                
+                
+               
+                <div class="product">
+                    <a href="}" target="_blank" rel="noopener noreferrer">
+                        <img src="" alt="" width="270" height="300">
+                    </a>
+                    <div class="hide">
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="far fa-eye"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="product-text">
+                        <p>{{this.name}}</p>
+                        <h3>{{this.price}}</h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+               
+                 <div class="product">
+                    <img src="images\product 6.png" alt="" width="270" height="300">
+                    <div class="hide">
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="far fa-eye"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="product-text">
+                        <p>feather red grass</p>
+                        <h3>$45</h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                 <div class="product">
+                    <img src="images\product 4.png" alt="" width="270" height="300">
+                    <div class="hide">
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="far fa-eye"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="product-text">
+                        <p>feather red grass</p>
+                        <h3>$45</h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div> 
+                <div class="product">
+                    <img src="images\product 2.png" alt="" width="270" height="300">
+                    <div class="hide">
+                        <i class="fas fa-shopping-cart"></i>
+                        <i class="far fa-eye"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="product-text">
+                        <p>feather red grass</p>
+                        <h3>$45</h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+       
