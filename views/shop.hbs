@@ -1,71 +1,104 @@
-
+         <script defer type="text/javascript" src="shop.js"></script>
         {{>pageInfo}}
         <div id="shop-section">
             <div id="shop-section-inner" class="inner">
                 <div class="product-section" >
-                    <div id= "categories-section" class="row">
+                    <div  class="row categories-section">
                         <div class="category">
-                            <p> <span>12</span> product found of 30 </p>
+                            <p> 
+                                <span style="color: #abd373">{{cal count "sub" (cal current "mul" 5)}} </span>
+                                product found of 
+                                <span style="color: #abd373">{{count}}</span></p>
                         </div>
-                        <div class="category">
-                           <a href="">
-                            <i class="fas fa-th"></i>
-                           </a>
-                        </div>
-                        <div class = "category">
-                            <a href="">
-                                <i class="fas fa-th-list"></i>
-                            </a>
-                        </div>
+                        <a href="/shop?{{urlStr url 'view' 'grid'}}" class="category views {{#if (when query.view 'noteq' 'list')}} active {{/if}} " id="gridView">
+                           <i class="fas fa-th"></i>
+                        </a>
+                        <a href="/shop?{{urlStr url 'view' 'list'}}"  class = "category views {{#if (when query.view 'eq' 'list')}} active {{/if}}" id="listView">
+                            <i class="fas fa-th-list"></i>
+                        </a>
                         
-                        <select name="" id="" class="category">
-                            <option value="">sort by default</option>
-                            <option value="">sort by popularity</option>
-                            <option value="">sort by rated</option>
-                            <option value="">sort by latest</option>
-                            <option value="">sort by high price</option>
-                            <option value="">sort by low price</option>
+                        <select name="" id="sort-select" class="category">
+                            <option value="def" {{#if (when query.sort 'noteq' '')}} selected {{/if}}>sort by default</option>
+                            {{!-- <option value="pop">sort by popularity</option> --}}
+                            {{!-- <option value="rate">sort by rated</option> --}}
+                            <option value="late" {{#if (when query.sort 'eq' "late")}} selected {{/if}}>sort by latest</option>
+                            <option value="hp"   {{#if (when query.sort 'eq' "hp")}} selected {{/if}}>sort by high price</option>
+                            <option value="lp"  {{#if (when query.sort 'eq' "lp")}} selected {{/if}}>sort by low price</option>
                         </select>
                         
                     </div>
         
             
-                    <div class="row product-div">
+                    <div class="row product-div {{#if (when query.view 'eq' 'list')}} list-view {{/if}}" id="products">
                         {{#each plant}}
                         <div class="product">
-                            <a href="/shop/{{this.name}}">
+                            <a href="/shop/product/{{this.name}}">
                                 <img src={{this.src.[0]}} alt="" height="250">
                             </a>
-                            <div class="hide">
-                                <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                                <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
-                                <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
-                            </div>
-                            <div class="product-text">
-                                <p>{{this.name}}</p>
-                                <h3>${{this.price}}</h3>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                            <div class="product-content"> 
+                                <div class="hide">
+                                    <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                    <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
+                                    <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                                </div>
+                                <div class="product-decription"> 
+                                    <p class="sub" hidden>{{this.shortDesc}} </p>
+                                </div>
+                                <div class="product-text">
+                                    <p>{{this.name}}</p>
+                                    <h3>${{this.price}}</h3>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
                             </div>
                         </div>
                         {{/each}}
                     </div>
-                    <div id= "categories-section" class="row">
-                        <div class="category">
-                            <a href="">1</a>
-                        </div>
-                        <div class="category">
-                           <a href="">2</a>
-                        </div>
-                        <div class = "category">
-                            <a href="">3</a>
-                        </div>
-                        <div class = "category">
-                            <a href=""><i class="fas fa-angle-double-right"></i></a>
-                        </div>
+                    <div id= "pagination" class="row categories-section">
+                        
+                    {{#if (when pages 'gt' 1) }}
+
+                        {{#if (when current 'gt' 1) }}
+                            <a href="/shop?{{urlStr url 'page' (cal current 'sub' 1) }}" class = "category"><i class="fas fa-angle-double-left"></i></a>
+                        {{/if}}
+
+                        {{#if (when  current 'steq' 3)}}
+                            {{#if (when 4 'steq' pages) }}
+                            {{#for 1 4 1}}
+                                <a href="" class = "category page-tag">{{this}}</a>
+                            {{/for}}
+                            {{else}} 
+                                {{#for 1 pages 1}}
+                                <a href="" class = "category page-tag">{{this}}</a>
+                                {{/for}}
+                            {{/if}}
+                        {{/if}}
+
+                        {{#if (when current 'gt' 3)}}
+                                <a class = "category" >...</a>
+                                {{#if (when (cal current 'add' 2) 'steq' pages) }}
+                                        {{#for (cal current 'sub' 1) (cal current 'add' 2) 1}}
+                                           <a href="" class = "category page-tag">{{this}}</a>
+                                        {{/for}}
+                                    {{else}} 
+                                        {{#for (cal current 'sub' 2) pages 1}}
+                                            <a href="" class = "category page-tag">{{this}}</a>
+                                        {{/for}}
+                                {{/if}}
+                        {{/if}}                     
+
+                        {{#if (when (when (cal current 'add' 2) 'steq' pages) 'and' (when pages 'gt' 4)  )}}
+                            <a class = "category" >...</a>
+                        {{/if}}
+
+                        {{#if (when current 'st' pages) }}
+                            <a href="/shop?{{urlStr url 'page' (cal current 'add' 1) }}" class = "category"><i class="fas fa-angle-double-right"></i></a>
+                        {{/if}}
+
+                    {{/if}}   
                         
                     </div>
                 </div>
@@ -81,31 +114,45 @@
                             <div class="filter-criteria">
                                 <h2> categories </h2>
                                 <ul>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> all <span>(65)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> bonsai <span>(12)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> house plants <span>(22)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> indoor living <span>(19)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> perenials <span>(17)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> plant for gift <span>(01)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> garden tools <span>(12)</span> </a> </li>
+                                    <li> <a  href="/shop"><i class="fas fa-chevron-right"></i> all </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'flower plant'}}"><i class="fas fa-chevron-right"></i> flower plant </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'balcony plant'}}"><i class="fas fa-chevron-right"></i> balcony plants </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'latest'}}"><i class="fas fa-chevron-right"></i> latest </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'featured'}}"><i class="fas fa-chevron-right"></i> featured </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'best seller'}}"><i class="fas fa-chevron-right"></i> best seller  </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'new'}}"><i class="fas fa-chevron-right"></i> new </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'medicial plant'}}"><i class="fas fa-chevron-right"></i> medicial plant </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'holy plant'}}"><i class="fas fa-chevron-right"></i> holy plant </a> </li>
+                                    <li> <a  href="/shop?{{urlStr url 'category' 'fruit plant'}}"><i class="fas fa-chevron-right"></i> fruit plant </a> </li>
                                 </ul>
                             </div>
     
                             <div class="filter-criteria">
                                 <h2> color </h2>
                                 <ul>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> all <span>(65)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> gold <span>(12)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> green <span>(22)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> white <span>(13)</span> </a> </li>
-                                    <li> <a href=""><i class="fas fa-chevron-right"></i> black <span>(10)</span> </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> all </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> gold  </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> green </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> white </a> </li>
+                                    <li> <a href=""><i class="fas fa-chevron-right"></i> black </a> </li>
                                 </ul>
                             </div>
     
                             <div class="filter-criteria">
                                 <h2> price filter </h2>
-                                <div>
-                                    <input type="range">
+                                <div id="price-range-slider">
+                                    <a href="" id= "price-link"></a>
+                                    <div id="price-range">
+                                        <div id="price-selected-range"></div>
+                                    </div>
+                                    <div id="min-range" class="range">
+                                        <span class="bubble" id="bubble-min">{{#if query.minprice}} ${{query.minprice}} {{else}} $1{{/if}}</span>
+                                        <input type="range" name="price-min"  id="price-min" min=1 max=100 value={{#if query.minprice}} {{query.minprice}} {{else}} 1{{/if}}>
+                                    </div>
+                                    <div id="max-range" class="range">
+                                        <span class="bubble" id="bubble-max">{{#if query.maxprice}} ${{query.maxprice}} {{else}} $100{{/if}}</span>
+                                        <input type="range" name="price-max"  id="price-max" min=1 max=100 value={{#if query.maxprice}} {{query.maxprice}} {{else}} 100{{/if}}
+                                    </div>
                                 </div>
                             </div>
     
@@ -113,22 +160,25 @@
                                 <h2> popular tags </h2>
                                 <div id= "categories-section" class="row">
                                     <div class="category">
-                                        <a href="">fashion</a>
+                                        <a  href="/shop?{{urlStr url 'tags' 'vastu plant'}}">vastu plant</a>
                                     </div>
                                     <div class="category">
-                                       <a href="">organic</a>
+                                       <a  href="/shop?{{urlStr url 'tags' 'flower'}}">flower</a>
                                     </div>
                                     <div class = "category">
-                                        <a href="">old fashion</a>
+                                        <a   href="/shop?{{urlStr url 'tags' 'culnary'}}">culnary</a>
                                     </div>
                                     <div class = "category">
-                                        <a href="">man</a>
+                                        <a  href="/shop?{{urlStr url 'tags' 'luck bringing'}}">luck bringing</a>
                                     </div>
                                     <div class = "category">
-                                        <a href="">fashion</a>
+                                        <a  href="/shop?{{urlStr url 'tags' 'medicial'}}">medicial</a>
                                     </div>
                                     <div class = "category">
-                                        <a href="">dress</a>
+                                        <a  href="/shop?{{urlStr url 'tags' 'insect repelling'}}">insect repelling</a>
+                                    </div>
+                                    <div class = "category">
+                                        <a  href="/shop?{{urlStr url 'tags' 'ornamental'}}">ornamental</a>
                                     </div>
                                     
                                 </div>

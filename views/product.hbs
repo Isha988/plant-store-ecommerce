@@ -3,14 +3,14 @@
         <div id="purchase-section">
             <div id="purchase-section-inner" class="inner">
                 <div id="product-images">
-                    <a  href="" id="product-image-single">
-                        <img src={{this.src.[0]}}  alt="">
-                    </a>
+                    <div id="product-image-single-cover">
+                        <img id="product-image-single" src={{this.src.[0]}}  alt="" height="400">
+                    </div>
                     <div id="product-image-grid" class="row-2">
                         {{#each this.src}}
-                        <a href="" class="grid-image">
-                            <img src={{this}} alt="" height="100">
-                        </a>
+                        <div onclick="changeImage(this)" class="grid-image-cover">
+                            <img class="grid-image" src={{this}} alt="" height="100">
+                        </div>
                         {{/each}}
                     </div>
                 </div>
@@ -68,11 +68,11 @@
 
                     <div id="quantity-and-btn" class="row">
                         <div id="quantity">
-                            <input type="text" value="1" patter="[1-9]+[0-9]*">
-                            <div id="decrease">
+                            <input id= "productUnit" type="text" value="1" onkeypress="return onlyNumberKey(event)" maxlength="1">
+                            <div id="decrease" onclick="cartUnit('sub', this)">
                                 <i class="fas fa-minus"></i>
                             </div>
-                            <div id="increase">
+                            <div id="increase"  onclick="cartUnit('add', this)">
                                 <i class="fas fa-plus"></i>
                             </div>
                         </div>

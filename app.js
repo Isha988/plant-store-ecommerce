@@ -10,10 +10,11 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require ('bcryptjs'); 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const MongoStore = require('connect-mongo');
 const User = require('./models/user');
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 //connecting mongoose
 mongoose.connect('mongodb://localhost:27017/products');
@@ -35,6 +36,8 @@ const app = express();
 
 //static file
 app.use(express.static('public'))
+app.use("/user",express.static('public'))
+app.use("/shop/product", express.static("public"));
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
 
 // set view engine 
@@ -46,7 +49,11 @@ app.use(cookieParser());
 app.use(session({
     secret: 'keyboard cat',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: 'mongodb://localhost:27017/products',
+      autoRemove: true
+    })
 }));
 
 //body-parser
@@ -56,7 +63,8 @@ app.use(express.urlencoded({extended:false}));
 //express message middle-ware
 app.use(flash());
 app.use((req, res, next)=>{
-  app.locals.success = req.flash('success')
+  app.locals.success = req.flash('success');
+  app.locals.error = req.flash('error');
   next();
 });
 app.use(function (req, res, next) {
@@ -104,6 +112,7 @@ passport.deserializeUser(function(id, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 //is login
 app.get('*', (req, res, next) => {

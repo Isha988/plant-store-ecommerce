@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
     firstName: {
         type: String
     },
     lastName: {
+        type: String
+    },
+    gender: {
         type: String
     },
     email: {
@@ -12,6 +16,21 @@ const userSchema = mongoose.Schema({
     },
     password:{
         type: String
+    },
+    billingAddress: {
+        type: String
+    },
+    shippingAddress: {
+        type: String
+    },
+    resetToken:{
+        type: String
+    },
+    cart: { 
+        type: Schema.Types.ObjectId, ref: 'cart'
+    },
+    wishlist: { 
+        type: Schema.Types.ObjectId, ref: 'wishlist'
     },
     reviews:{
         type: Array

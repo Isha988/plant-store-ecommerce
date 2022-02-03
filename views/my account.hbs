@@ -3,13 +3,24 @@
         <div id="account-section">
             <div class="inner">
                 <div role ="tablist" id="account-tab-list">
-                    <a href="" role="tab" aria-controls="orders" class="active">orders</a>
+                    <a href="" role="tab" aria-controls="dashboard" class="active">dashboard</a>
+                    <a href="" role="tab" aria-controls="orders" class="">orders</a>
                     <a href="" role="tab" aria-controls="addresses" class="">addresses</a>
                     <a href="" role="tab" aria-controls="account-details" class="">account details</a>
-                    <a href="login register .html" role=""  class="">logout</a>
+                    <a href="/logout" role=""  class="">logout</a>
                 </div>
 
-                <div id="orders" role="tabpanel">
+                <div id="dashboard" role="tabpanel">
+                    <p>Hello <span>{{user.firstName}}</span>
+                        (not <span>{{user.firstName}}?</span> 
+                        <a href="/logout">Sign out</a>)
+                    </p>
+                    <p>From your account dashboard you can view your recent orders, 
+                        manage your shipping and billing addresses and edit your password and account details.
+                    </p>
+                </div>
+
+                <div id="orders" role="tabpanel" hidden>
                     <h2>my orders</h2>
 
                     <div id="table">
@@ -65,24 +76,27 @@
                 </div>
 
                 <div id="account-details" role="tabpanel" hidden>
-                    <form action="" class="form">
-                        <label for="">first name</label>
-                        <input type="text">
+                    <form action="/user/update" class="form" method='POST'>
+                        <label for="firstName">first name</label>
+                        <input type="text" name="firstName" value="{{#if user}}{{user.firstName}}{{/if}}" required>
 
-                        <label for="">last name</label>
-                        <input type="text">
+                        <label for="lastName">last name</label>
+                        <input type="text" name="lastName" value="{{#if user}}{{user.lastName}}{{/if}}">
 
-                        <label for="">email</label>
-                        <input type="email" >
+                        <label for="email">email</label>
+                        <input type="email"  name="email" value="{{#if user}}{{user.email}}{{/if}}" required>
 
-                        <label for="">current password</label>
-                        <input type="password">
+                        <label for="gender">gender</label>
+                        <input type="text"  name="gender" value="{{#if user}}{{user.gender}}{{/if}}">
 
-                        <label for="">new password</label>
-                        <input type="password" >
+                        <label for="password">current password</label>
+                        <input type="password" name="password" >
 
-                        <label for=""> confirm new password</label>
-                        <input type="password">
+                        <label for="newPassword">new password</label>
+                        <input type="password" name="newPassword">
+
+                        <label for="confirmNewPassword"> confirm new password</label>
+                        <input type="password"  name="confirmNewPassword">
 
                         <input type="submit" value="save changes" class="btn">
                     </form>

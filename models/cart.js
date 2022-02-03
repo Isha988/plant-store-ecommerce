@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const cartSchema = mongoose.Schema({
-    user: String,
-    items: [{name: String, img: String, price: Number, unit: Number, 
-            total: Number}],
+const cartSchema = Schema({
+    user: { 
+        type: Schema.Types.ObjectId, ref: 'user'
+    },
+    items:[{ 
+        plant: {type: Schema.Types.ObjectId, ref: 'plant'}, 
+        unit: Number, 
+        total: Number}],
+    totalItem: Number,            
     total: Number
 });
 

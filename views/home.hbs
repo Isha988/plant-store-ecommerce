@@ -1,9 +1,5 @@
 
-    {{#if success}}
-            {{#each success}}
-                <p class='msg success'>{{this}}</p>
-            {{/each}}
-          {{/if}}
+        
 
           {{!-- {{#if messages}}
             {{messages}}
@@ -99,7 +95,7 @@
 
     <div class="product-section inner" >
         <h1 class="heading"> our products</h1>
-        <div id= "categories-section" class="row">
+        <div class="row categories-section">
             <a href="" class="category active" role="tab" aria-controls="featured" >
                 featured
             </a>
@@ -115,12 +111,12 @@
                 {{#each plant}}
                     {{#if (display this 'featured')}}
                         <div class="product">
-                        <a href="/shop/{{this.name}}">
+                        <a href="/shop/product/{{this.name}}">
                             <img src={{this.src.[0]}} alt="" height="250">
                         </a>
                             <div class="hide">
                                 <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                                <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
                                 <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
                             </div>
                             <div class="product-text">
@@ -140,12 +136,12 @@
                 {{#each plant}}
                     {{#if (display this 'best seller')}}
                         <div class="product">
-                        <a href="/shop/{{this.name}}">
+                        <a href="/shop/product/{{this.name}}">
                             <img src={{this.src.[0]}} alt="" height="250">
                         </a>
                             <div class="hide">
                                 <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                                 <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                 <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
                                 <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
                             </div>
                             <div class="product-text">
@@ -165,12 +161,12 @@
                 {{#each plant}}
                     {{#if (display this 'latest')}}
                         <div class="product">
-                        <a href="/shop/{{this.name}}">
+                        <a href="/shop/product/{{this.name}}">
                             <img src={{this.src.[0]}} alt="" height="250">
                         </a>
                             <div class="hide">
                                 <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                                 <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                                 <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
                                 <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
                             </div>
                             <div class="product-text">
@@ -235,12 +231,12 @@
         {{#each plant}}
             {{#if (display this 'new')}}
                 <div class="product">
-                    <a href="/shop/{{this.name}}">
+                    <a href="/shop/product/{{this.name}}">
                         <img src={{this.src.[0]}} alt="" height="250">
                     </a>
                     <div class="hide">
                         <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                         <a href="/shop/{{this.name}}"><i class="far fa-eye"></i></a>
+                         <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
                         <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
                     </div>
                     <div class="product-text">

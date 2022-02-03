@@ -1,4 +1,5 @@
 
+        
         {{>pageInfo}}
         <div id="contact-section">
             <div id="contact-section-inner" class="inner">
@@ -22,12 +23,12 @@
                     </ul>
                 </div>
                 
-                <form id="contact-form">
-                        <input type="text" placeholder="first name*" pattern="[A-Za-z]+[A-Za-z]*" required="required">
-                        <input type="text" placeholder="last name*" pattern="[A-Za-z]+[A-Za-z]*"  required="required">
-                        <input type="text" placeholder="phone*" pattern="[6789][0-9]{9}"  required="required">
-                        <input type="email" placeholder="email*"  required="required">
-                        <textarea name="" id="" cols="30" rows="5" placeholder="message"   required="required"></textarea>
+                <form  action ="/contact" id="contact-form" method="post">
+                        <input type="text" name="firstName" placeholder="first name*" value= "{{#if user}}{{user.firstName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z]*" required>
+                        <input type="text" name="lastName" placeholder="last name"  value= "{{#if user}}{{user.lastName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z]*" >
+                        <input type="text" name="phone" placeholder="phone*" value= "{{#if user}}{{user.phone}}{{/if}}"pattern="[6789][0-9]{9}"  required=>
+                        <input type="email" name="email" placeholder="email*" value= "{{#if user}}{{user.email}}{{/if}}" required>
+                        <textarea name="message" id="" cols="30" rows="5" placeholder="message*"   required></textarea>
                         <input type="submit" value="post comment" class="btn formBtn">
                 </form>
                 

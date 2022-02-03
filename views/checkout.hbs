@@ -147,25 +147,16 @@
                                 <th>product</th>
                                 <th>total</th>
                             </tr>
-    
+                        {{#each cart.items}}
                             <tr>
-                                <td>vestibulum suscipit <span>x1</span></td>
-                                <td class="rate">$165.0</td>
+                                <td>{{this.name}} <span>x {{this.unit}}</span></td>
+                                <td class="rate">$ {{this.price}}</td>
                             </tr>
-    
-                            <tr>
-                                <td>vestibulum suscipit <span>x1</span></td>
-                                <td class="rate">$165.0</td>
-                            </tr>
-    
-                            <tr>
-                                <td class="bold">cart subtotal</td>
-                                <td class="rate">$165.0</td>
-                            </tr>
+                        {{/each}}
     
                             <tr>
                                 <td class="bold">order total</td>
-                                <td id="charges">$165.0</td>
+                                <td id="charges">$ {{cart.total}}</td>
                             </tr>
                         </table>
                     </div>
@@ -179,7 +170,9 @@
                         </p>
                         <a href=""> cheque payment</a>
                         <a href=""> PayPal</a>
-                        <div class="btn b">place order</div>
+                        <form action="/create-checkout-session" method="POST">
+                            <button type="submit" class="btn b">place order</button>
+                        </form>
                     </div>
                 </div>
             </div>

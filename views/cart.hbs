@@ -1,7 +1,9 @@
         {{>pageInfo}}
-       <div id="cart" class="product-table">
+        
+        <div id="cart" class="product-table userCart">
            <div class="inner">
                 {{#if cart}}
+                {{#if cart.items}}
                <table class="table">
                   <thead>
                     <tr>
@@ -16,23 +18,23 @@
                    <tbody>
                     {{#each cart.items}}  
                     <tr>
-                        <td class="remove"> <a href=""> x </a> </td>
-                        <td class="img"> <a href=""> <img src={{this.img}} alt=""> </a></td>
-                        <td class="name"> <a href="" >{{this.name}}</a> </td>
-                        <td class="price"> {{this.price}} </td>
+                        <td class="remove"> <a href="" data={{this.plant.id}}> x </a> </td>
+                        <td class="img"> <a href=""> <img src={{this.plant.src.[0]}} alt=""> </a></td>
+                        <td class="name"> <a href="" >{{this.plant.name}}</a> </td>
+                        <td class="price"> ${{this.plant.price}} </td>
                         <td class="number"> 
                             <div id="quantity-and-btn" class="row">
                             <div id="quantity">
-                                <input type="text" value={{this.unit}} patter="[1-9]+[0-9]*">
-                                <div id="decrease">
+                                <input type="text" name = {{this.plant.id}} value={{this.unit}}  onkeypress="return onlyNumberKey(event)" maxlength="1">
+                                <div id="decrease" onclick="cartUnit('sub', this)">
                                     <i class="fas fa-minus"></i>
                                 </div>
-                                <div id="increase">
+                                <div id="increase" onclick="cartUnit('add', this)">
                                     <i class="fas fa-plus"></i>
                                 </div>
                             </div> 
                         </td>
-                        <td class="total">{{this.total}}</td>
+                        <td> $<span class="total">{{this.total}}</span></td>
                    </tr>
                     {{/each}} 
                 </tbody>
@@ -40,15 +42,18 @@
                </table>
 
                <div class="cart-total">
-                   <div class="btn b">update cart</div>
+                   <a onclick = "updateBtn()" id="updateBtn" class="btn b" >update cart</a>
                    <div id="total">
                        <h2>cart totals</h2>
-                       <div>subtotal <span>{{cart.total}}</span></div>
-                       <div>total <span>{{cart.total}}</span></div>
+                       <div>items <span id="totalItem">{{cart.totalItem}}</span></div>
+                       <div>total <span>$<span id= "cartTotal">{{cart.total}}</span></span></div>
                    </div>
-                   <div class="btn b">proceed to checkout</div>
+                   <a href="/checkout" class="btn b">proceed to checkout</a>
                </div>
                 {{else}} 
+                    {{>noItem}}
+                {{/if}}
+                {{else}}
                     {{>noItem}}
                 {{/if}}
            </div>

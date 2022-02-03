@@ -12,7 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
     <script defer type="text/javascript" src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
     <body>
@@ -36,38 +37,41 @@
                 <h2>shopping cart</h2>
                 <h2 id="remove-cart">X</h2>
             </div>
-            {{!-- {{#if user}}
-                {{#if cart}}
-                {{#each cart.items}}
-                <div class="item row-2">
-                <img src={{this.img}} alt="">
-                <div class="item-text">
-                    <a href="">{{this.name}}</a>
-                    <span>{{this.unit}} X {{this.price}}</span>
-                </div>
-                <div class="item-remove">
-                    X
-                </div>
-                </div>
-                {{/each}}
-                <div id="small-cart-subtotal" class="row">
-                    <p>subtotal</p>
-                    <p>$79.35</p>
-                </div>
-    
-                <a href = "/cart" class="btn b" >view cart</a>
-                <a href="" class="btn b">checkout</a>
-                {{else}}
+            {{#if user }}
+            <div id="small-cart-data" class="userCart">
                 {{>noItem}}
-                {{/if}}
-                {{else}}
-                <div class="no-user">
+            </div>
+
+            {{else}}
+            <div class="no-user">
                     <div class="text">please login </div>
                     <a href="/login" class="btn no-user-link"> login </a>
-                </div>
-            {{/if}} --}}
-            
+            </div>
+            {{/if}}    
         </div>
+
+        <template id="template1">
+            <div class="item row-2">
+                <img src="" alt="">
+                <div class="item-text">
+                    <a href="">name</a>
+                    <span>unit X price</span>
+                </div>
+                <div>
+                    <a  class="remove" href="" data=""> x </a>
+                </div>
+            </div>
+        </template>
+
+        <template id= "template2">
+            <div id="small-cart-subtotal" class="row">
+                    <p>subtotal</p>
+                    <p>$<span id = "smallCartTotal"></span></p>
+            </div>
+
+            <a href = "/cart" class="btn b" >view cart</a>
+            <a href="/checkout" class="btn b">checkout</a>
+        </template>
 
         <div id="navbar-small" class="hide">
             <div  id="remove-navbar-small">
@@ -81,10 +85,10 @@
             </div>
 
             <div >
-                <a href="" target="_self" > 
+                <a href="/user/account" target="_self" > 
                     <i class="fas fa-users" aria-hidden="tdue"></i>
                 </a>
-                <a href="" target="_self"  > 
+                <a href="/wishlist" target="_self"  > 
                     <i class="fas fa-heart" aria-hidden="tdue"></i>
                 </a>
             </div>
@@ -120,7 +124,7 @@
                         </a>
                         <div class= "acc-link-card">
                             {{#if user}}
-                            <a href="/myaccount">my account</a>
+                            <a href="/user/account">my account</a>
                                 <a href="/logout"> logout</a>
                             {{else}}
                                 <a href="/login">login | register</a>    
@@ -156,7 +160,19 @@
           {{/if}} --}}
         {{messages locals}}
 
+        {{#if success}}
+            {{#each success}}
+                <p class='msg success'>{{this}}</p>
+            {{/each}}
+        {{/if}}
+        {{#if error}}
+            {{#each error}}
+                <p class='msg error'>{{this}}</p>
+            {{/each}}
+        {{/if}}
+
        {{{body}}}
+       
 
         <footer>
             <div id="footer-inner" class="inner row">
@@ -277,37 +293,5 @@
         
         </footer>
 
-        <script id="template" type="text/x-handlebars-template">
-            {{#if user}}
-                {{#if items}}
-                {{#each items}}
-                <div class="item row-2">
-                <img src={{this.img}} alt="">
-                <div class="item-text">
-                    <a href="">{{this.name}}</a>
-                    <span>{{this.unit}} X {{this.price}}</span>
-                </div>
-                <div class="item-remove">
-                    X
-                </div>
-                </div>
-                {{/each}}
-                <div id="small-cart-subtotal" class="row">
-                    <p>subtotal</p>
-                    <p>$79.35</p>
-                </div>
-    
-                <a href = "/cart" class="btn b" >view cart</a>
-                <a href="" class="btn b">checkout</a>
-                {{else}}
-                {{>noItem}}
-                {{/if}}
-                {{else}}
-                <div class="no-user">
-                    <div class="text">please login </div>
-                    <a href="/login" class="btn no-user-link"> login </a>
-                </div>
-            {{/if}}
-        </script>
     </body>
 </html>
