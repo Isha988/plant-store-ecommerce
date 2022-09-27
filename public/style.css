@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.4s linear-out;
     text-transform: capitalize;
     font-family: 'Quicksand', sans-serif; 
 }
@@ -48,6 +48,28 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 20px;
+}
+.ajaxMsgBox{
+    position: fixed;
+    top:0;
+    right:5%;
+    transform: translateY(-50%);
+    transform: translateX(2rem);
+}
+.ajaxMsgBox.success, .ajaxMsgBox.error{
+    transform: translateX(0);
+}
+.ajaxMsgBox .msgText{
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.ajaxMsgBox span{
+    position: absolute;
+    top: 0.25rem;
+    right: 0.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
 }
 body{
     color: var(--black);
@@ -147,6 +169,7 @@ h1.heading {
     top: 10px;
     right:20px;
     cursor: pointer;
+    transition: 0.5s ease-in;
 }
 #search #remove-search:hover{
     transform: rotateZ(180deg);
@@ -339,7 +362,7 @@ nav #icon-nav a{
     font-weight: 500 !important;
     margin: 0 !important;
     padding: 0.5rem 2rem !important;
-    display: inline-block !important;
+    display: block !important;
 }
 
 /*crousel*/
@@ -347,6 +370,7 @@ nav #icon-nav a{
     background: hsl(28, 100%, 93%);
     padding: 0.5rem 1.25rem ;
     position: relative;
+    overflow: hidden;
 }
 #crousel .crousel-page {
     display:flex;
@@ -358,8 +382,25 @@ nav #icon-nav a{
     width: 65%;
     margin: 1.5rem auto;
     position:relative;
+    visibility:hidden;
+    animation: image 0.5s linear 2.3s forwards
 }
-
+#crousel .crousel-page .crousel-text h2{
+    visibility: hidden;
+    animation: text 0.5s linear 0.3s forwards 
+}
+#crousel .crousel-page .crousel-text h1{
+    visibility: hidden;
+    animation: text 0.5s linear 0.9s forwards
+}
+#crousel .crousel-page .crousel-text p{
+    visibility: hidden;
+    animation: text 0.5s linear 1.4s forwards
+}
+#crousel .crousel-page .crousel-text a{
+    visibility: hidden;
+    animation: text 0.5s linear 1.9s forwards
+}
 #crousel .crousel-page .image img {
     width: 100%;
     height: auto;
@@ -368,7 +409,17 @@ nav #icon-nav a{
     margin: auto;
     display: block;
 }
-
+@keyframes image{
+    0% {transform: translateY(100%);visibility: hidden;}
+    100%{ transform: translateY(0); visibility: visible;}
+}
+@keyframes text{
+    0% { transform: translateY(100%);visibility: hidden;}
+    100%{ transform: translateY(0); visibility: visible;}
+}
+#crousel .crousel-page.unactive {
+    display:none;
+}
 .after{
    content: "";
     width:75%;
@@ -568,6 +619,10 @@ nav #icon-nav a{
 #testimonial-section #testimonial-header p{
     padding: 0 1rem;
 }
+.swiper-container{
+    overflow: hidden;
+    position: relative;
+}
 #testimonial-section #testimonial {
     width: 90%;
     margin:auto;
@@ -575,14 +630,10 @@ nav #icon-nav a{
 }
 
 #testimonial-section #testimonial .testimonial{
-    flex-shrink: 0;
     padding: 2rem;
     border-radius: 5px;
-    width: 100%;
     background-color: white;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
-    position:relative;
-    
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.15); 
 }
 #testimonial-section #testimonial .testimonial .circle{
     background-color: var(--green);
@@ -621,10 +672,24 @@ nav #icon-nav a{
     line-height: 2rem;
     text-transform: none;
 }
+#testimonal-nav{
+    position: relative;
+    margin-top: 60px;
+}
 
-#testimonial-section #testimonal-nav {
-   text-align: center;
-   margin: 3rem;
+#testimonal-nav > *{
+    background: var(--green);
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    margin: 5px;
+    opacity: 1;
+}
+#testimonal-nav >  .swiper-pagination-bullet-active{
+    outline: 1px solid var(--green);
+    outline-offset: 2px;
 }
 #brand-section{
     margin : 1rem 1rem 3rem;
@@ -636,10 +701,9 @@ nav #icon-nav a{
     border-radius : 10px;
     padding:  2rem;
 }
-#brand-section #brand{
-    gap: 20%;
-    border: 1px solid black;
+#brand-section .brand-swiper{
     overflow: hidden;
+    margin: auto;
 }
 #brand-section #brand .brand img{
      opacity: 0.5;
@@ -667,6 +731,9 @@ footer{
 #footer-logo img{
     max-width:150px;
     width: 100%;
+}
+.footerAbout{
+    text-transform: none;
 }
 .footer-div ul, .footer-div p {
     list-style: none;
@@ -775,7 +842,7 @@ footer{
     padding :  3rem 2rem;
     
 }
-form input:not([type="submit"]),
+form input:not([type="submit"],[type="radio"]),
 form textarea{
     text-transform: none;
     font-style: oblique;
@@ -1238,11 +1305,29 @@ input[type=”range”]::-ms-track{
     line-height: 1.8rem;
     font-weight: 600;
 }
-#info-section #review .comment .btn{
-    border-radius: 5px;
-    padding: 0.5rem 2rem;
+#info-section #review .comment{
     margin-bottom: 3.5rem;
-    margin-top: 0;
+}
+#commentRating{
+    display: flex;
+    justify-content: left; 
+    flex-direction: row-reverse;
+}
+.ratingStar{
+    display: none;
+}
+.ratingStar:not(:checked) ~ label:hover,
+.ratingStar:not(:checked) ~ label:hover ~label{
+    color: #ffec90
+}
+.ratingStar:checked ~ label{
+    color: var(--yellow);
+}
+label.fa-star {
+    color : var(--grey);
+    cursor:pointer;
+    font-size: 1.5rem;
+    margin-right: 1rem;
 }
 .form input:not([type="submit"]), 
 .form textarea{
@@ -1251,6 +1336,10 @@ input[type=”range”]::-ms-track{
     border: 1px solid var(--grey);
     font-style: normal;
     color: var(--black);
+}
+.stars i{
+    color: var(--yellow);
+    margin-right: 1rem;
 }
 /*about us*/
 
@@ -1388,14 +1477,17 @@ input[type=”range”]::-ms-track{
     font-weight: 400;
     font-size: 1.9rem;
 }
+#team-member{
+    margin-top: 4rem;
+}
 .member{
-    padding: 1.5rem;
+    padding: 0.25rem 1.5rem;
     text-align: center;
     width: 100%;
 }
 .member img{
     width:100%;
-    height:100%;
+    aspect-ratio: 1;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -1403,13 +1495,13 @@ input[type=”range”]::-ms-track{
     position: relative;
     width: 100%;
     max-width:250px;
-    height: 250px;
+    aspect-ratio: 1;
     margin: 1rem auto;
 }
 .member .profile{
     padding-top: 1rem;
-    width: 250px;
-    height: 125px;
+    width: 100%;
+    aspect-ratio: 2;
     border-bottom-left-radius: 250px;
     border-bottom-right-radius: 250px;
     background: white;
@@ -1458,13 +1550,13 @@ input[type=”range”]::-ms-track{
     padding: 0.8rem;
     margin: 1.5rem auto;
 }
-.signup form .extra {
+form .extra {
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--l-black);
 }
-.signup form input[type="checkbox"] {
+form input[type="checkbox"] {
     width: initial;
 }
 
@@ -1584,19 +1676,15 @@ input[type=”range”]::-ms-track{
     text-transform: uppercase;
     margin-bottom: 1rem;
 }
-#addresses #default-add{
-    column-count: 2;
-    column-gap: 1.5rem;
-    column-width: 100px;
-}
-#account-details form input:not([type="submit"]){
+
+#account-section form input:not([type="submit"]){
     padding: 0.65rem 1rem;
     margin: 0.5rem auto 1rem;
 }
-#account-details form label{
+#account-section form label{
     font-weight: 600;
 }
-#account-details form .btn{
+#account-section form .btn{
     padding: 1rem 1.5rem;
     font-size: 1rem;
     margin: 1rem 0 0;
@@ -1680,15 +1768,15 @@ main{
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--grey) ;
 }
-#billing form input:not([type="submit"]),#billing form textarea{
+form #checkout-section input:not([type="submit"]),form #checkout-section textarea{
     padding: 0.65rem ;
     margin: 0.5rem auto 1rem;
 }
-#billing form label{
+form #checkout-section label{
     font-weight: 600;
     color: var(--l-black);
 }
-#billing form select, #billing form select option{
+form #checkout-section select, form #checkout-section select option{
     display: block;
     background-color: white;
     padding: 0.85rem 1rem;
@@ -1774,6 +1862,110 @@ main{
     padding: 0.8rem 1.2rem;
     margin: 1.5rem 0 0;
 }
+#dashBoard{
+    margin: 3rem 0;
+}
+#dashBoard h2, #product-form h2{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 1rem;    
+}
+.btn.r{
+    background-color: rgb(209, 34, 34);
+}
+#dashBoard{
+    width: 100%;
+    padding: 1.5rem;
+    border: 1px solid var(--grey);
+}
+#dashBoard .btn{
+    border-radius: 0;
+    margin: 0;
+    padding: 0.8rem 1.2rem;
+}
+#dashBoard .optionsWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+#dashBoard input{
+    max-width: 100%;
+    min-width: 200px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    flex: 1;
+}
+#dashBoard li{
+    border: 1px solid var(--grey);
+    padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
+}
+#dashBoard li .text{
+    flex : 1;
+    min-width: 200px;
+}
+#dashBoard li img{
+    max-width: 50px;
+    object-fit:contain;
+} 
+#dashBoard li p{
+    color: var(--green);
+    font-weight: 700;
+}
+#dashBoard #showMore{
+    text-align: center;
+    text-transform: none;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#product-form{
+    border: 1px solid var(--grey);
+    padding: 1.5rem;
+    margin: 3rem 0;
+}
+#product-form form label{
+    font-weight: 700;
+}
+#product-form .btn{
+    border-radius: 0;
+    padding: 0.8rem 1.2rem;
+    margin: 1.5rem 0;
+}
+#product-form #images{
+    display:flex;
+    flex-wrap: wrap;
+}
+#product-form #images img{
+    max-width: 90px;
+    object-fit: contain;
+    object-position: center;
+    margin:auto;
+}
+.searchItem{
+    background-color: white;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    min-width: 250px;
+    display: flex;
+}
+.searchItem:nth-child(1){
+    margin-top: 1rem;
+}
+.searchItem img{
+    max-width: 40px;
+    max-height: 40px;
+    object-fit:contain;
+    margin-right: 0.5rem;
+}
+.searchItem a{
+    font-weight: 700;
+    color: var(--black)
+}
 @media screen and (min-width:570px){
     #small-cart{
         width: 450px;
@@ -1812,6 +2004,22 @@ main{
     .member{
         width: 50%;
     }
+    .member.up{
+        transform: translateY(-50px);
+    }
+    #addresses #default-add{
+        display: flex;
+        gap: 1.5rem;
+    }
+    #dashBoard li {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .searchItem{
+        min-width: 350px;
+    }
 }
 
 @media screen and (min-width:780px){
@@ -1821,8 +2029,7 @@ main{
     .hide-med{
         display: none;
     }
-    #service-section .service ,#banner-section .banner.center, 
-    #testimonial-section #testimonial .testimonial{
+    #service-section .service ,#banner-section .banner.center{
         width: 48%;
     }
     .product-section .product-div .product, .footer-div.sm {
@@ -1847,6 +2054,11 @@ main{
     #crousel:hover .hide {
         visibility: visible;
     }
+    #crousel i:hover{
+        background-color: var(--green);
+        color: white;
+        border:none; 
+    } 
     header #crousel .crousel-page .image{
         width: 42%;
     }
@@ -1966,8 +2178,9 @@ main{
         grid-template-columns: 1fr 3fr;
         column-gap: 1.5rem;
     }
-   
-
+    .member{
+        width: 25%;
+    }
     .hide-small{
     display: inline-block;
     }
@@ -1980,46 +2193,44 @@ main{
     .inner{
         max-width: 1116px;
     }
-    #testimonial-section #testimonial .testimonial{
-        width: 31%;
-    }
     .product-section .product-div .product{
         width: 23%;
     }
     #contact-section form input:not([type="submit"]){
         width: 48%;  
     }
-    .member{
-        width: 25%;
-    }
+    
 }
 
 
-@media (hover: hover) {
+
     #icon-div a:hover, #crousel i:hover,
-    .product-section .product-div .product .hide i:hover{
+    .product-section .product-div .product .hide i:hover, .dropdownLink:hover{
         background-color: var(--green);
-        color: white;
-        border:none; 
+        color: white !important;
+        border-color: var(--green); 
     } 
     .product:hover .hide{
         visibility: visible;
         transform: translateX(0);
     }
-    .list-view .product:hover .product-section .list-view .product{
+    .list-view .product:hover{
         box-shadow: 2px 5px 7px var(--bg), -2px 5px 7px var(--bg);
         border: none;
     }
     #testimonial-section #testimonial .testimonial:hover .circle,
     .btn:hover{
         background-color: var(--l-black);
-        color: white;
+        color: white !important;
     }
     .btn.b:hover{
         background-color: var(--green);
     }
-    .link:hover{
-        color: var(--green);
+    .link:hover, #dashBoard #showMore:hover, a:hover{
+        color: var(--green) !important;
+    }
+    a.wh:hover{
+        color: white!important;
     }
     .member:hover .profile{
         visibility:visible;
@@ -2027,4 +2238,8 @@ main{
     .member:hover .name{
         opacity: 0;
     }
-}
+    .product-section .categories-section .category:hover{
+        color: var(--green);
+        border-color: var(--green);
+        border-style: dashed;
+    }

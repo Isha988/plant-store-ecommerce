@@ -3,14 +3,16 @@
         <div id="account-section">
             <div class="inner">
                 <div role ="tablist" id="account-tab-list">
-                    <a href="" role="tab" aria-controls="dashboard" class="active">dashboard</a>
-                    <a href="" role="tab" aria-controls="orders" class="">orders</a>
-                    <a href="" role="tab" aria-controls="addresses" class="">addresses</a>
-                    <a href="" role="tab" aria-controls="account-details" class="">account details</a>
+                    <a href="" role="tab" aria-controls="dashboard" class="{{#if (when tab 'eq' 'dashboard')}}active{{/if}}">dashboard</a>
+                    <a href="" role="tab" aria-controls="orders" class="{{#if (when tab 'eq' 'orders')}}active{{/if}}">orders</a>
+                    <a href="" role="tab" aria-controls="cart" class="{{#if (when tab 'eq' 'cart')}}active{{/if}}">cart</a>
+                    <a href="" role="tab" aria-controls="wishlist" class="{{#if (when tab 'eq' 'wishlist')}}active{{/if}}">wishlist</a>
+                    <a href="" role="tab" aria-controls="addresses" class="{{#if (when tab 'eq' 'addresses')}}active{{/if}}">addresses</a>
+                    <a href="" role="tab" aria-controls="account-details" class="{{#if (when tab 'eq' 'account details')}}active{{/if}}">account details</a>
                     <a href="/logout" role=""  class="">logout</a>
                 </div>
 
-                <div id="dashboard" role="tabpanel">
+                <div id="dashboard" role="tabpanel" {{#if (when tab 'noteq' 'dashboard')}}hidden{{/if}}>
                     <p>Hello <span>{{user.firstName}}</span>
                         (not <span>{{user.firstName}}?</span> 
                         <a href="/logout">Sign out</a>)
@@ -20,11 +22,12 @@
                     </p>
                 </div>
 
-                <div id="orders" role="tabpanel" hidden>
+                <div id="orders" role="tabpanel" {{#if (when tab 'noteq' 'orders')}}hidden{{/if}}>
                     <h2>my orders</h2>
 
                     <div id="table">
                         <table class="table">
+                            {{#if order}}
                             <thead>
                               <tr>
                                   <td>order</td>
@@ -35,59 +38,89 @@
                               </tr>
                             </thead>
                              <tbody>
-                              <tr>
-                                  <td class="order"> #5678 </td>
-                                  <td class="date"> mar 27, 2021</td>
-                                  <td class="staus"> on hold </td>
-                                  <td class="cost"> $23.45 </td>
-                                  <td class="view"><a href="" class="btn b "> view </a></td>
-                             </tr>
-                             <tr>
-                                  <td class="order"> #5678 </td>
-                                  <td class="date"> mar 27, 2021</td>
-                                  <td class="staus"> on hold </td>
-                                  <td class="cost"> $23.45 </td>
-                                  <td class="view"><a href="" class="btn b "> view </a></td>
-                             </tr>
+                                {{#each order}}
+                                    <tr>
+                                        <td class="order">{{this.id}} </td>
+                                        <td class="date"> {{this.date}}</td>
+                                        <td class="staus"> on hold </td>
+                                        <td class="cost"> ${{this.total}} </td>
+                                        <td class="view"><a href="/user/order/{{this.id}}" class="btn b" target="blank"> view </a></td>
+                                    </tr>
+                                {{/each}}
                              </tbody>
-                             
+                            {{else}}
+                                You have not made a order till now
+                            {{/if}} 
                          </table>
                     </div>
                 </div>
 
-                <div id="addresses" role="tabpanel" hidden>
+                <div id="addresses" role="tabpanel"  {{#if (when tab 'noteq' 'addresses')}}hidden{{/if}}>
                     <p>The following addresses will be used
                         on the checkout page by default</p>
                      
-                    <div id="default-add">
-                        <div class="add">
-                            <h2>billing address</h2>
-                            <p>1234 Heaven Stress, Beverly Hill 
-                                OldYork UnitedState of Lorem </p>
-                        </div>
+                    <form action="/user/addressUpdate" method="post" class="form">
+                        <div id="default-add">
+                            <div class="add" id="billingAddress">
+                                <h2>billing address</h2>
+                                <label for="bCountry"> country</label>
+                                <input type="text" name="bCountry"  placeholder="Country"  value="{{user.billingAddress.country}}">
+                                
+                                <label for="bState"> state</label>
+                                <input type="text" name="bState"  placeholder="State" value="{{user.billingAddress.state}}">
+                                
+                                <label for="bcity">city</label>
+                                <input type="text" name="bCity"  placeholder="City" value="{{user.billingAddress.city}}">
+                                
+                                <label for="bPin">Pin code</label>
+                                <input type="text" name="bPin"  pattern="[0-9]+" placeholder="Post code" value="{{user.billingAddress.pin}}">
+                                
+                                 <label for="bAddress"> address</label>
+                                <input type="text" name="bAddress"  placeholder="Address" value="{{user.billingAddress.address}}">
+                            </div>
 
-                        <div class="add">
-                            <h2>shipping address</h2>
-                            <p>1234 Heaven Stress, Beverly Hill 
-                                OldYork UnitedState of Lorem </p>
-                        </div>
-                    </div>
-                    
+                            <div class="add" id="shippingAddress">
+                                <h2>shipping address</h2>
+                                <label for="sCountry"> country</label>
+                                <input type="text" name="sCountry"  placeholder="Country" value="{{user.shippingAddress.country}}">
+
+                                <label for="sState"> state</label>
+                                <input type="text" name="sState"  placeholder="State" value="{{user.shippingAddress.state}}">
+                                
+                                <label for="scity">city</label>
+                                <input type="text" name="sCity"  placeholder="City" value="{{user.shippingAddress.city}}">
+                                
+                                <label for="sPin">Pin code</label>
+                                <input type="text" name="sPin"  placeholder="Post code" value="{{user.shippingAddress.pin}}">
+                                
+                                <label for="sAddress"> address</label>
+                                <input type="text" name="sAddress"  placeholder="Address" value="{{user.shippingAddress.address}}">
+                            </div>
+                         </div>  
+                         <label for="" class="extra">
+                            <input type="checkbox" id="addressCheckbox" autocomplete="off">
+                            is shipping-address same ?
+                         </label>
+                         <input type="submit" value="save addresses" class="btn">
+                    </form>
                 </div>
 
-                <div id="account-details" role="tabpanel" hidden>
-                    <form action="/user/update" class="form" method='POST'>
+                <div id="account-details" role="tabpanel"  {{#if (when tab 'noteq' 'account details')}}hidden{{/if}}>
+                    <form action="/user/account" class="form" method='POST'>
                         <label for="firstName">first name</label>
-                        <input type="text" name="firstName" value="{{#if user}}{{user.firstName}}{{/if}}" required>
+                        <input type="text" name="firstName" value="{{user.firstName}}" required>
 
                         <label for="lastName">last name</label>
-                        <input type="text" name="lastName" value="{{#if user}}{{user.lastName}}{{/if}}">
+                        <input type="text" name="lastName" value="{{user.lastName}}">
 
                         <label for="email">email</label>
-                        <input type="email"  name="email" value="{{#if user}}{{user.email}}{{/if}}" required>
+                        <input type="email"  name="email" value="{{user.email}}" required>
+
+                        <label for="phone">Phone</label>
+                        <input type="text" pattern="[6789][0-9]{9}"  name="phoneNumber" value="{{user.phoneNumber}}">
 
                         <label for="gender">gender</label>
-                        <input type="text"  name="gender" value="{{#if user}}{{user.gender}}{{/if}}">
+                        <input type="text"  name="gender" value="{{user.gender}}">
 
                         <label for="password">current password</label>
                         <input type="password" name="password" >
@@ -102,7 +135,74 @@
                     </form>
                 </div>
 
+                <div id="cart" role="tabpanel" {{#if (when tab 'noteq' 'cart')}}hidden{{/if}}>
+                    <h2>my cart</h2>
+
+                    <div id="table">
+                        <table class="table">
+                            {{#if cart.items}}
+                            <thead>
+                              <tr>
+                                  <td>product</td>
+                                  <td>image</td>
+                                  <td>price</td>
+                                  <td>unit</td>
+                                  <td>total</td>
+                                  <td>view</td>
+                              </tr>
+                            </thead>
+                             <tbody>
+                              {{#each cart.items}}
+                                <tr>
+                                  <td class="product">{{this.plant.name}}</td>
+                                  <td class="image"><img src={{this.plant.src.[0]}} alt=""></td>
+                                  <td class="price">${{this.plant.price}}</td>
+                                  <td class="unit">{{this.unit}}</td>
+                                  <td class="total"> ${{this.total}} </td>
+                                  <td class="view"><a href="/shop/product/{{this.plant.name}}" class="btn b "> view </a></td>
+                             </tr>
+                              {{/each}}
+                             </tbody>
+                            {{else}}
+                                yon have an empty cart
+                            {{/if}} 
+                         </table>
+                    </div>
+                </div>
+
+                 <div id="wishlist" role="tabpanel" {{#if (when tab 'noteq' 'wishlist')}}hidden{{/if}}>
+                    <h2>my wishlist</h2>
+
+                    <div id="table">
+                        <table class="table">
+                            {{#if wishlist.items}}
+                            <thead>
+                              <tr>
+                                  <td>product</td>
+                                  <td>image</td>
+                                  <td>price</td>
+                                  <td>view</td>
+                              </tr>
+                            </thead>
+                             <tbody>
+                              {{#each wishlist.items}}
+                                <tr>
+                                  <td class="product">{{this.name}}</td>
+                                  <td class="image"><img src={{this.src.[0]}} alt=""></td>
+                                  <td class="price">{{this.price}}</td>
+                                  <td class="view"><a href="/shop/product/{{this.name}}" class="btn b "> view </a></td>
+                             </tr>
+                              {{/each}}
+                             </tbody>
+                             {{else}}
+                                you have an empty wishlist
+                            {{/if}}
+                         </table>
+                    </div>
+                </div>
+
             </div>
         </div>
+        <script defer type="text/javascript" src="account.js"></script>
 
        

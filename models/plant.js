@@ -34,8 +34,13 @@ const productSchema = mongoose.Schema({
     longDesc: {
         type: String
     },
-    review: {
-        type: Array
+    totalStar: {
+        type: Number,
+        default: 0
+    },
+    totalReview:{
+        type: Number,
+        default: 0
     }
 });
 

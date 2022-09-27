@@ -1,0 +1,37 @@
+    {{>pageInfo}}
+
+    <div class="product-table userCart">
+           <div class="inner">
+               <table class="table">
+                  <thead>
+                    <tr>
+                        <td>image</td>
+                        <td>product</td>
+                        <td>unit price</td>
+                        <td>quantity</td>
+                        <td>total</td>
+                    </tr>
+                  </thead>
+                   <tbody>
+                    {{#each order.items}}  
+                    <tr>
+                        <td class="img"> <a href="/shop/product/{{this.plant.name}}"> <img src={{this.plant.src.[0]}} alt=""> </a></td>
+                        <td class="name"> <a href="/shop/product/{{this.plant.name}}" >{{this.plant.name}}</a> </td>
+                        <td class="price"> ${{cal this.total "div" this.unit}} </td>
+                        <td class="number">{{this.unit}}</td>
+                        <td> $<span class="total">{{this.total}}</span></td>
+                   </tr>
+                    {{/each}} 
+                </tbody>
+                   
+               </table>
+
+               <div class="cart-total">
+                   <div id="total">
+                       <h2>order totals</h2>
+                       <div>items <span id="totalItem">{{order.totalItem}}</span></div>
+                       <div>total <span>$<span id= "cartTotal">{{order.total}}</span></span></div>
+                   </div>
+               </div>
+           </div>
+       </div>

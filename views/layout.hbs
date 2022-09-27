@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plantza - {{title}}</title>
     <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
     <script defer type="text/javascript" src="script.js"></script>
+     <script defer type="text/javascript" src="search.js"></script>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.jpg">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -24,12 +30,23 @@
                 X
             </div>
             
-                <p>Start typing and press Enter to search or ESC to close</p>
-                <form action="">
-                    <input type="text" value ="Search...">
-                    <button type="submit"> <i class="fas fa-search"></i></button>
-                </form>
-            
+            <p>Start typing and press Enter to search or ESC to close</p>
+            <form action="" id="search-form">
+                <input type="text" placeholder="Search..." id="search-input" autocomplete="off">
+                <button type="submit"> <i class="fas fa-search"></i></button>
+            </form>
+
+            <div id="searchItemsWrapper">
+                <ul id="searchList"></ul>
+            </div>
+            <template id="searchItemTemp">
+                <li class="searchItem">
+                    <img src="" alt="">
+                    <div>
+                        <a href=""></a>
+                    </div>
+                </li>
+            </template>
         </div>
 
         <div id="small-cart" class="hide">
@@ -37,7 +54,7 @@
                 <h2>shopping cart</h2>
                 <h2 id="remove-cart">X</h2>
             </div>
-            {{#if user }}
+            {{#if user}}
             <div id="small-cart-data" class="userCart">
                 {{>noItem}}
             </div>
@@ -75,7 +92,7 @@
 
         <div id="navbar-small" class="hide">
             <div  id="remove-navbar-small">
-                <a href="">
+                <a href="" class="wh">
                     <i class="fas fa-times" aria-hidden="tdue"></i>
                 </a>
             </div>
@@ -85,18 +102,18 @@
             </div>
 
             <div >
-                <a href="/user/account" target="_self" > 
+                <a href="/user/account" target="_self" class="wh"> 
                     <i class="fas fa-users" aria-hidden="tdue"></i>
                 </a>
-                <a href="/wishlist" target="_self"  > 
+                <a href="/wishlist" target="_self"  class="wh"> 
                     <i class="fas fa-heart" aria-hidden="tdue"></i>
                 </a>
             </div>
         
-            <a href="/" target="_self" > home </a>
-            <a href="/shop" target="_self" > shop </a>
-            <a href="/about" target="_self" > about us </a>
-            <a href="/contact" target="_self" > contact us </a>
+            <a href="/" target="_self" class="wh"> home </a>
+            <a href="/shop" target="_self" class="wh"> shop </a>
+            <a href="/about" target="_self" class="wh"> about us </a>
+            <a href="/contact" target="_self" class="wh"> contact us </a>
         </div>
 
 
@@ -119,23 +136,23 @@
                         <a href="#search" target="_self" id="open-search"> 
                             <i class="fas fa-search" aria-hidden="tdue"></i>
                         </a>
-                        <a href="" target="_self"  class="hide-small"> 
-                            <i class="fas fa-users" aria-hidden="tdue"></i>
-                        </a>
-                        <div class= "acc-link-card">
-                            {{#if user}}
-                            <a href="/user/account">my account</a>
-                                <a href="/logout"> logout</a>
-                            {{else}}
-                                <a href="/login">login | register</a>    
-                            {{/if}}
-                        </div>
                         <a href="/wishlist" target="_self"  class="hide-small"> 
                             <i class="fas fa-heart" aria-hidden="tdue"></i>
                         </a>
                         <a href="#small-cart" target="_self" id="open-small-cart" > 
                             <i class="fas fa-shopping-cart" aria-hidden="tdue"></i>
                         </a>
+                        <a href="" target="_self"  class="hide-small" id="loginCardLink"> 
+                            <i class="fas fa-users" aria-hidden="tdue"></i>
+                        </a>
+                        <div class= "acc-link-card hide" id="loginCard">
+                            {{#if user}}
+                                <a href="/user/account" class="dropdownLink">my account</a>
+                                <a href="/logout" class="dropdownLink" > logout</a>
+                            {{else}}
+                                <a href="/login" class="dropdownLink">login | register</a>    
+                            {{/if}}
+                        </div>
                         <a href="#navbar-small" target="_self"  class="hide-large" id="open-navbar-small"> 
                             <i class="fas fa-bars" aria-hidden="tdue"></i>
                         </a>
@@ -155,11 +172,6 @@
         {{/if}}
 
 
-         {{!-- {{#if messages}}
-                <p class="msg error">{{this.message}}</p>
-          {{/if}} --}}
-        {{messages locals}}
-
         {{#if success}}
             {{#each success}}
                 <p class='msg success'>{{this}}</p>
@@ -170,6 +182,12 @@
                 <p class='msg error'>{{this}}</p>
             {{/each}}
         {{/if}}
+        <template id="ajaxMsg">
+               <div class="ajaxMsgBox msg error">
+                <p class="msgText">hello</p>
+                <span onclick="deleteNode(this)">X</span>
+            </div>
+        </template>
 
        {{{body}}}
        
@@ -180,21 +198,21 @@
                     <div id="footer-logo">
                         <img src="images/logo.png" alt="">
                     </div>
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                        <br>Maxime quis ad eius, sunt repellendus voluptate?
+                    <p class="footerAbout">
+                        Plantza is India’s foremost AgTech start-up working on the mission of #HelpingFarmersWin <br>
+                        by providing a complete range of agri solutions at the fingertips of farmers.
                     </p>
                     <div id="icon-div">
-                        <a href="">
+                        <a href="#">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="">
+                        <a href="#">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="">
+                        <a href="#">
                             <i class="fab fa-pinterest"></i>
                         </a>
-                        <a href="">
+                        <a href="#">
                             <i class="fab fa-dribbble"></i>
                         </a>
                     </div>
@@ -207,67 +225,61 @@
                     
                         <ul>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/about">about plantza</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/shop">how to shop</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/contact">contact us</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
-                            </li>
-                            <li>
-                                <a href="">about plantza</a>
+                                <a href="/login">login</a>
                             </li>
                         </ul>
                 </div>
             
                 <div class="footer-div sm">
                     <div>
-                        <h3>useful links</h3>
+                        <h3>my account</h3>
                     </div>
                     
                         <ul>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/login">sign in</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/cart">view cart</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="/wishlist">my wishlist</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
-                            </li>
-                            <li>
-                                <a href="">about plantza</a>
+                                <a href="/account">my orders</a>
                             </li>
                         </ul>
                 </div>
             
                 <div class="footer-div sm">
                     <div>
-                        <h3>useful links</h3>
+                        <h3>our services</h3>
                     </div>
                     
                         <ul>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="#">payment methods</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="#">money guarantee!</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="#">returns</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="#">shipping</a>
                             </li>
                             <li>
-                                <a href="">about plantza</a>
+                                <a href="#">privacy policy</a>
                             </li>
                         </ul>
                 </div>

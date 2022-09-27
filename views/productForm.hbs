@@ -1,0 +1,76 @@
+        {{>pageInfo}}
+        <div class="inner">
+            <div id="product-form">
+            <h2>Product Details</h2>
+
+            <form method="POST" class="form"  id="productForm" enctype="multipart/form-data" data="{{plant.id}}">
+            <label for="name">name</label>
+            <input type="text" name="name" value= "{{plant.name}}" required>
+
+            <label for="price">price</label>
+            <input type="number" name="price" value= "{{plant.price}}" required>
+
+            <label for="shortDesc">short description</label>
+            <textarea name="shortDesc" id="" cols="30" rows="5">{{plant.shortDesc}}</textarea>
+
+            <label for="categories">categories</label>
+            <input type="text" name="categories" placeholder="category1, category2, ..."  value="{{#if plant}}{{stringify plant.categories}}{{/if}}">
+
+            <label for="tag">tag</label>
+            <input type="text" name="tag" placeholder="tag1, tag2, ..."  value="{{#if plant}}{{stringify plant.tag}}{{/if}}">
+
+            <label for="info">information</label>
+            
+            <div id="informationPair">
+                {{#if plant}}
+                {{#each plant.information}}
+               <div class="pair">
+                    <label for="informationHeading">information Heading</label>
+                    <input type="text" name="informationHeading" value={{this.name}}>
+                    <label for="informationText">information text</label>
+                    <textarea name="informationText" id="" cols="30" rows="5">{{this.info}}</textarea>
+               </div>
+                {{/each}}
+                {{else}}
+                <div class="pair">
+                    <label for="informationHeading">information Heading</label>
+                    <input type="text" name="informationHeading" >
+                    <label for="informationText">information text</label>
+                    <textarea name="informationText" id="" cols="30" rows="5"></textarea>
+               </div>
+                {{/if}}
+                <div class="btn b" id="addInfo"> add more information</div>
+            </div>
+
+            <label for="longDesc">long description</label>
+            <textarea name="longDesc" id="" cols="30" rows="10">{{plant.longDesc}}</textarea>
+
+            <label for="image">images</label>
+            <input type="file" name="image" id="" multiple>
+            {{#if plant}}
+            <div id="images">
+            {{#each plant.src}}
+            <img src="{{this}}" alt="">
+            {{/each}}
+            </div>
+            <input type="submit" value="save" class="btn" data="{{plant.id}}">
+            {{else}}
+            <input type="submit" value="save" class="btn">
+            {{/if}}
+
+            
+            </form>
+        </div>
+        </div>
+
+        <template id="pairTemplate">
+            <div class="pair">
+                <label for="informationHeading">information Heading</label>
+                <input type="text" name="informationHeading">
+                <label for="informationText">information text</label>
+                <textarea name="informationText" id="" cols="30" rows="5"></textarea>
+            </div>
+
+        </template>
+
+        <script defer type="text/javascript" src="adminForm.js"></script>

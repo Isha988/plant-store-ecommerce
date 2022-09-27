@@ -19,8 +19,8 @@
                     {{#each cart.items}}  
                     <tr>
                         <td class="remove"> <a href="" data={{this.plant.id}}> x </a> </td>
-                        <td class="img"> <a href=""> <img src={{this.plant.src.[0]}} alt=""> </a></td>
-                        <td class="name"> <a href="" >{{this.plant.name}}</a> </td>
+                        <td class="img"> <a href="/shop/product/{{this.plant.name}}"> <img src={{this.plant.src.[0]}} alt=""> </a></td>
+                        <td class="name"> <a href="/shop/product/{{this.plant.name}}">{{this.plant.name}}</a> </td>
                         <td class="price"> ${{this.plant.price}} </td>
                         <td class="number"> 
                             <div id="quantity-and-btn" class="row">

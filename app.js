@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 const path = require("path");
 const hbs = require('hbs');
-const router = require('./routes/route');
+const router = require('./routes/route')
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -37,6 +37,9 @@ const app = express();
 //static file
 app.use(express.static('public'))
 app.use("/user",express.static('public'))
+app.use("/admin",express.static('public'))
+app.use("/admin/edit",express.static('public'))
+app.use("/user/order",express.static('public'))
 app.use("/shop/product", express.static("public"));
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
 
@@ -92,6 +95,31 @@ passport.use(new LocalStrategy({
         }
         else {
           return done(null, false, {message: 'wrong password'});
+        }
+      })
+    });
+  }
+));
+
+passport.use("adminLogin",new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+},
+  function(username, password, done) {
+    User.findOne({ email : username, role: 'admin'}, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'wrong credintials' });
+      }
+      bcrypt.compare(password, user.password, function(err, isMatch){
+        if(err){
+          throw err;
+        }
+        if(isMatch){
+          return done(null,user);
+        }
+        else {
+          return done(null, false, {message: 'wrong credintials'});
         }
       })
     });

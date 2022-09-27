@@ -1,19 +1,7 @@
 
-        
-
-          {{!-- {{#if messages}}
-            {{messages}}
-          {{/if}} --}}
-             {{messages locals}}
-
-        {{#if user}}
-            <p class='msg success'>hello {{user.firstName}}</p>
-        {{/if}}
-
-
             <div id="crousel">
                 <div class="hide">
-                    <i class="fas fa-angle-double-left" onclick="currentCrousel(index-=1)"></i>
+                    <i class="fas fa-angle-double-left" onclick="currentCrousel(index -= 1)"></i>
                  </div>
     
                  <div class="crousel-page inner">
@@ -31,11 +19,11 @@
                         <p>
                             pronia, with 100% natural, organic & plant shop
                         </p>
-                        <a href="" class="btn">discover now</a>
+                        <a href="/shop?category=latest" class="btn">discover now</a>
                     </div>
                  </div>
                 
-                <div class="crousel-page inner">
+                <div class="crousel-page inner unactive">
                     <div class="image">
                         <div class="after"></div>
                         <img src="images\crousel 2.png" alt="">
@@ -50,12 +38,12 @@
                         <p>
                             pronia, with 100% natural, organic & plant shop
                         </p>
-                        <a href=""  class="btn">discover now</a>
+                        <a href="/shop?category=new"  class="btn">discover now</a>
                     </div>
                 </div>
                 
                 <div id="navigator" class="hide-med">
-                    <span class="dot" onclick="currentCrousel(index = 0)"></span>   
+                    <span class="dot active" onclick="currentCrousel(index = 0)" ></span>   
                     <span class="dot" onclick="currentCrousel(index = 1)"></span>     
                 </div>
 
@@ -122,11 +110,12 @@
                             <div class="product-text">
                                 <p>{{this.name}}</p>
                                 <h3>${{this.price}}</h3>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                                {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                                    <i class="fas fa-star"></i>
+                                {{/for}}
+                                {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                                    <i class="far fa-star"></i>
+                                {{/for}}
                             </div>
                         </div>
                     {{/if}}
@@ -147,11 +136,12 @@
                             <div class="product-text">
                                 <p>{{this.name}}</p>
                                 <h3>${{this.price}}</h3>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                                {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                                    <i class="fas fa-star"></i>
+                                {{/for}}
+                                {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                                    <i class="far fa-star"></i>
+                                {{/for}}
                             </div>
                         </div>
                     {{/if}}
@@ -172,11 +162,12 @@
                             <div class="product-text">
                                 <p>{{this.name}}</p>
                                 <h3>${{this.price}}</h3>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                                {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                                    <i class="fas fa-star"></i>
+                                {{/for}}
+                                {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                                    <i class="far fa-star"></i>
+                                {{/for}}
                             </div>
                         </div>
                     {{/if}}
@@ -191,7 +182,7 @@
                 <div class="banner-text">
                     <h3> collection of cactus</h3>
                     <h2>pottery pot & <br> plants</h2>
-                    <a href="" class="btn">shop now</a>
+                    <a href="/shop?category=best seller" class="btn">shop now</a>
                 </div>
             </div>
             <div class="banner center" >
@@ -199,7 +190,7 @@
                 <div class="banner-text">
                     <h3> new collection</h3>
                     <h2>plant port</h2>
-                    <a href="" class="btn">shop now</a>
+                    <a href="/shop?category=featured" class="btn">shop now</a>
                 </div>
             </div>
             <div class="banner center" >
@@ -207,7 +198,7 @@
                 <div class="banner-text">
                     <h3> new collection</h3>
                     <h2> plant port</h2>
-                    <a href="" class="btn">shop now</a>
+                    <a href="/shop?category=new" class="btn">shop now</a>
                 </div>
             </div>
             <div class="banner" >
@@ -215,7 +206,7 @@
                 <div class="banner-text">
                     <h3> collection of cactus</h3>
                     <h2> hanging pots & <br> plant</h2>
-                    <a href="" class="btn">shop now</a>
+                    <a href="/shop?category=balcony+plant&maxprice=27" class="btn">shop now</a>
                 </div>
             </div>
         </div>
@@ -242,11 +233,12 @@
                     <div class="product-text">
                         <p>{{this.name}}</p>
                         <h3>${{this.price}}</h3>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
+                        {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                            <i class="fas fa-star"></i>
+                        {{/for}}
+                        {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                            <i class="far fa-star"></i>
+                        {{/for}}
                     </div>
                 </div>
             {{/if}}
@@ -260,78 +252,123 @@
         <p class="sub">Contrary to popular belief, Lorem Ipsum is not simply random text. 
             It has roots <br> in a piece of classical Latin literature </p>
     </div>
-    <div id="testimonial" class="row-2 inner">
-        <div class="testimonial">
-            <div class="circle">
-                <i class="fas fa-quote-left"></i>
+    <div id="testimonial" class="inner swiper-container">
+        <div class="swiper-wrapper">
+            <div class="testimonial swiper-slide">
+                <div class="circle">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="profile">
+                    <img src="images/profile 1.jpg" alt="">
+                    <h3>alferd william</h3>
+                    <p>client</p>
+                </div>
+                <div class="review">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+                </div>
             </div>
-            <div class="profile">
-                <img src="images/profile 1.jpg" alt="">
-                <h3>alferd william</h3>
-                <p>client</p>
+            <div class="testimonial swiper-slide">
+                <div class="circle">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="profile">
+                    <img src="images/profile 2.jpg" alt="">
+                    <h3>alferd william</h3>
+                    <p>client</p>
+                </div>
+                <div class="review">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+                </div>
             </div>
-            <div class="review">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+            <div class="testimonial swiper-slide">
+                <div class="circle">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <div class="profile">
+                    <img src="images/profile 3.jpg" alt="">
+                    <h3>alferd william</h3>
+                    <p>client</p>
+                </div>
+                <div class="review">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Ad sapiente praesentium similique nulla explicabo laudantium?</p>
+                </div>
             </div>
         </div>
-        <div class="testimonial">
-           <div class="circle">
-                <i class="fas fa-quote-left"></i>
-            </div>
-            <div class="profile">
-                <img src="images/profile 2.jpg" alt="">
-                <h3>alferd william</h3>
-                <p>client</p>
-            </div>
-            <div class="review">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
-            </div>
+        <div id="testimonal-nav" class="swiper-pagination"> 
         </div>
-        <div class="testimonial">
-            <div class="circle">
-                <i class="fas fa-quote-left"></i>
-            </div>
-            <div class="profile">
-                <img src="images/profile 3.jpg" alt="">
-                <h3>alferd william</h3>
-                <p>client</p>
-            </div>
-            <div class="review">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                     Ad sapiente praesentium similique nulla explicabo laudantium?</p>
-            </div>
-        </div>
-    </div>
-    <div id="testimonal-nav">
-        <span class="dot"></span>   
-        <span class="dot"></span>
-        <span class="dot"></span>          
-    </div>
     </div>
 </div>
 
 <div id="brand-section">
-       <div class="inner">
-        <div id="brand" class="row-2">
-            <a href="home.html" class="brand">
-                <img src="images/brand 1.png" alt="">
-            </a>
-            <a href="home.html" class="brand">
-                <img src="images/brand 2.png" alt="">
-            </a>
-            <a href="home.html" class="brand">
-                <img src="images/brand 3.png" alt="">
-            </a>
-            <a href="home.html" class="brand">
-                <img src="images/brand 4.png" alt="">
-            </a>
-            <a href="home.html" class="brand">
-                <img src="images/brand 5.png" alt="">
-            </a>
-        </div>
+    <div class="inner">
+            <div class="brand-swiper">
+                <div id="brand" class="swiper-wrapper">
+                    <a href="#" class="brand swiper-slide">
+                        <img src="images/brand 1.png" alt="">
+                    </a>
+                    <a href="#" class="brand swiper-slide">
+                        <img src="images/brand 2.png" alt="">
+                    </a>
+                    <a href="#" class="brand swiper-slide">
+                        <img src="images/brand 3.png" alt="">
+                    </a>
+                    <a href="#" class="brand swiper-slide">
+                        <img src="images/brand 4.png" alt="">
+                    </a>
+                    <a href="#" class="brand swiper-slide">
+                        <img src="images/brand 5.png" alt="">
+                    </a>
+                </div>
+            </div>
     </div>
-       </div>
 </div>
+<script defer type="text/javascript" src="home.js"></script>
+<script  src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script defer >
 
+  const swiper = new Swiper(".swiper-container", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+         breakpoints: {
+          800: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1200: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+        },
+      });
+
+    const brandSwiper = new Swiper(".brand-swiper", {
+        slidesPerView: 2,
+        spaceBetween: 50,
+        loop: true,
+         breakpoints: {
+          500: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+          },
+          980: {
+            slidesPerView: 4,
+            spaceBetween: 60,
+          },
+          1200: {
+            slidesPerView: 5,
+            spaceBetween: 60,
+          },
+        },
+        autoplay: {
+            delay: 5000,
+        },
+      });
+</script>

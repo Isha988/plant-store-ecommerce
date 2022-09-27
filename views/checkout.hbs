@@ -1,141 +1,86 @@
 
-        {{>pageInfo}}
-        <main>
-            <div id="return">
-                <div class="case inner">
-                    <i class="fas fa-shopping-cart" ></i> 
-                    <div class="text">
-                        Returning costumer?
-                    <span class="checkout-open">Click here to login</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="coupon">
-                <div class="case inner">
-                    <i class="fas fa-shopping-cart" ></i> 
-                    <div class="text">  
-                        Have a coupon?
-                        <span class="checkout-open">Click here to enter your code</span>
-                    </div>
-            </div>
-
+        {{>pageInfo}} 
+        <main> 
+            <form action="/create-checkout-session" method="POST" class="form">
             <div id="checkout-section" class="inner">
                 <div id="billing">
                    <div id="billing-details">
                         <h2>billing details</h2>
-                        <form action="" class="form">
-                            <label for="">country*</label>
-                            <select name="" id="" required>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">australia</option>
-                                <option value="london">london</option>
-                            </select>
+                            <label for="bCountry">country*</label>
+                            <input type="text" name="bCountry" required="required" class="input-small" value="{{user.billingAddress.country}}">
 
-                            <label for=""> first name*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="bFirst"> first name*</label>
+                            <input type="text" name="bFirst" required="required" class="input-small" value="{{user.firstName}}">
 
-                            <label for=""> last name*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="bLast"> last name</label>
+                            <input type="text"name="bLast" class="input-small"  value="{{user.lastName}}">
 
                             <label for=""> company name</label>
-                            <input type="text">
+                            <input type="text" >
                             
-                            <label for=""> address*</label>
-                            <input type="text" required="required" placeholder="street">
-                            <input type="text" placeholder="appartment, suite, unit etc. (optional)">
+                            <label for="bAddress"> address*</label>
+                            <input type="text" name="bAddress" required="required" value="{{user.billingAddress.address}}">
+        
+                            <label for="bCity">city*</label>
+                            <input type="text"  name="bCity" required="required" value="{{user.billingAddress.city}}">
 
-                            <label for=""> town / city*</label>
-                            <input type="text" required="required">
+                            <label for="bState"> state*</label>
+                            <input type="text" name="bState" required="required" class="input-small" value="{{user.billingAddress.state}}">
 
-                            <label for=""> state / country*</label>
-                            <input type="text" required="required" class="input-small">
-
-                            <label for=""> postcode / zip*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="bPin"> postcode / zip*</label>
+                            <input type="text" name="bPin" required="required" class="input-small" value="{{user.billingAddress.pin}}">
 
                             <label for="">email address*</label>
-                            <input type="email" required="required" class="input-small">
+                            <input type="email" disabled required="required" class="input-small"  value="{{user.email}}">
 
-                            <label for="">phone*</label>
-                            <input type="text" pattern="[6789][0-9]{9}"  required="required" class="input-small">
-
-                        </form>
+                            <label for="phone">phone*</label>
+                            <input type="text" name="phone" pattern="[6789][0-9]{9}"  required="required" class="input-small"  value="{{user.phoneNumber}}">
                    </div>
-
-                   <div id="create-account">
-                       <div>
-                           <input type="checkbox" name="" id="" class="checkout-open" >
-                            Create an account?
-                       </div>
-                       <div class="hide checkout-card">
-                        <p>
-                            Create an account by entering the information below. 
-                            If you are a returning customer please login at the top of the page.
-                        </p>
-                        <form action="" class="form">
-                            <label for="">account password</label>
-                            <input type="password" name="" id="" placeholder="password" >
-                        </form>
-                       </div>
-
-                   </div>
-
 
                    <div id="another-address">
-                       <h2>ship to a different addresss
-                            <input type="checkbox" name="" id="" class="checkout-open">
+                       <h2>ship to another address
+                            <input type="checkbox" name="shipCheckBox" class="checkout-open" autocomplete="off">
                         </h2>
-                        <form action="" class="form hide checkout-card">
-                            <label for="">country*</label>
-                            <select name="" id="" required>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">london</option>
-                                <option value="london">australia</option>
-                                <option value="london">london</option>
-                            </select>
+                        
+                        <div class="hide checkout-card">
+                            <label for="sCountry">country*</label>
+                             <input type="text" name="sCountry" class="input-small" value="{{user.shippingAddress.country}}">
 
-                            <label for=""> first name*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="sFirst"> first name*</label>
+                            <input type="text" name="sFirst" class="input-small" value="{{user.firstName}}">
 
-                            <label for=""> last name*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="sLast"> last name</label>
+                            <input type="text" name="sLast"  class="input-small" value="{{user.lastName}}">
 
                             <label for=""> company name</label>
-                            <input type="text">
+                            <input type="text" >
                             
-                            <label for=""> address*</label>
-                            <input type="text" required="required" placeholder="street">
-                            <input type="text" placeholder="appartment, suite, unit etc. (optional)">
+                            <label for="sAddress"> address*</label>
+                            <input type="text"  name="sAddress"  placeholder="address"  value="{{user.shippingAddress.address}}">
+    
+                            <label for="sCity"> city*</label>
+                            <input type="text" name="sCity"  value="{{user.shippingAddress.city}}">
 
-                            <label for=""> town / city*</label>
-                            <input type="text" required="required">
+                            <label for="sState"> state*</label>
+                            <input type="text" name="sState"  class="input-small"  value="{{user.shippingAddress.state}}">
 
-                            <label for=""> state / country*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="sPin"> postcode / zip*</label>
+                            <input type="text" name="sPin" class="input-small"  value="{{user.shippingAddress.pin}}">
 
-                            <label for=""> postcode / zip*</label>
-                            <input type="text" required="required" class="input-small">
+                            <label for="sEmail">email address*</label>
+                            <input type="email" name="sEmail"  class="input-small" value="{{user.email}}">
 
-                            <label for="">email address*</label>
-                            <input type="email" required="required" class="input-small">
-
-                            <label for="">phone*</label>
-                            <input type="text" pattern="[6789][0-9]{9}"  required="required" class="input-small">
-
-                        </form>
-                   </div>
+                            <label for="sPhone">phone*</label>
+                            <input type="text"  name="sPhone" pattern="[6789][0-9]{9}"  class="input-small" value="{{user.phoneNumber}}">
+                        </div>
+                       
+                    </div>
 
                    <div id="notes">
-                       <form action="" class="form">
+                       
                            <label for=""> order notes</label>
                            <textarea name="" id="" cols="30" rows="5" placeholder="notes about your order, e.g. special notes for delivery."></textarea>
-                       </form>
+                       
                    </div>
                 </div>
 
@@ -149,8 +94,8 @@
                             </tr>
                         {{#each cart.items}}
                             <tr>
-                                <td>{{this.name}} <span>x {{this.unit}}</span></td>
-                                <td class="rate">$ {{this.price}}</td>
+                                <td>{{this.plant.name}} <span>x {{this.unit}}</span></td>
+                                <td class="rate">$ {{this.plant.price}}</td>
                             </tr>
                         {{/each}}
     
@@ -170,12 +115,13 @@
                         </p>
                         <a href=""> cheque payment</a>
                         <a href=""> PayPal</a>
-                        <form action="/create-checkout-session" method="POST">
-                            <button type="submit" class="btn b">place order</button>
-                        </form>
+                        
+                        <button type="submit" class="btn b">place order</button>
+                       
                     </div>
                 </div>
             </div>
+            </form>
         </main>
 
         

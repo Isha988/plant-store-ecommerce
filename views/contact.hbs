@@ -12,10 +12,10 @@
                     </p>
                     <ul class="sub">
                         <li>
-                            <i class="fas fa-phone-alt"></i> <a href="">123 456 789</a>
+                            <i class="fas fa-phone-alt"></i> <a href=""class="wh">123 456 789</a>
                         </li>
                         <li>
-                            <i class="fas fa-envelope"></i> <a href="">info@example.com</a>
+                            <i class="fas fa-envelope"></i> <a href="" class="wh">info@example.com</a>
                         </li>
                         <li>
                             <i class="fas fa-map-marker-alt"></i> 13, your address, here
@@ -24,8 +24,8 @@
                 </div>
                 
                 <form  action ="/contact" id="contact-form" method="post">
-                        <input type="text" name="firstName" placeholder="first name*" value= "{{#if user}}{{user.firstName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z]*" required>
-                        <input type="text" name="lastName" placeholder="last name"  value= "{{#if user}}{{user.lastName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z]*" >
+                        <input type="text" name="firstName" placeholder="first name*" value= "{{#if user}}{{user.firstName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z ]*" required>
+                        <input type="text" name="lastName" placeholder="last name"  value= "{{#if user}}{{user.lastName}}{{/if}}" pattern="[A-Za-z]+[A-Za-z ]*" >
                         <input type="text" name="phone" placeholder="phone*" value= "{{#if user}}{{user.phone}}{{/if}}"pattern="[6789][0-9]{9}"  required=>
                         <input type="email" name="email" placeholder="email*" value= "{{#if user}}{{user.email}}{{/if}}" required>
                         <textarea name="message" id="" cols="30" rows="5" placeholder="message*"   required></textarea>

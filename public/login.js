@@ -10,11 +10,11 @@ document.querySelector("#forgetPasswordLink")
         forgetPassowrd();
     })
 
-const url = "http://localhost:3000/";
+const url = "http://localhost:8080/";
 function forgetPassowrd () {
     const userEmail = document.querySelector("#login-form input[type=email]").value;
     
-        fetch("http://localhost:3000/forgetPassword", {
+        fetch("http://localhost:8080/forgetPassword", {
             method: "POST",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',

@@ -1,0 +1,46 @@
+ {{>pageInfo}}
+
+ <div class="inner">
+     <div id="dashBoard">
+            <h2>product list</h2>
+            <div class="optionsWrapper">
+                <input type="text" placeholder="search....">
+                <a href="/admin/new" target="_blank" class="btn">add new product</a>
+            </div>
+            <ul id="productList">
+                {{#each plant}}
+                    <li class="productItems">
+                        <img src={{this.src.[0]}} alt="">
+                        <div class="text">
+                            <h3>{{this.name}}</h3>
+                            <p>${{this.price}}</p>
+                        </div>
+                        <div class="buttons">
+                            <a href="/admin/edit/{{this.id}}" class="btn editProduct" data={{this.id}} target="_blank">edit</a>
+                            <div class="btn r deleteProduct" data={{this.id}}>delete</div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+            <div id="showMore">show more</div>
+        
+     </div>
+</div>
+
+    
+
+<template id="listElement">
+    <li class="productItems">
+        <img src="" alt="">
+        <div class="text">
+            <h3></h3>
+            <p></p>
+        </div>
+        <div class="buttons">
+            <a href="" class="btn editProduct"  target="_blank">edit</a>
+            <div class="btn r deleteProduct" data="">delete</div>
+        </div>
+    </li>
+</template>
+
+<script defer type="text/javascript" src="adminDashboard.js"></script>

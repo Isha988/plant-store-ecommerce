@@ -86,56 +86,14 @@ const searchRemove =  document.getElementById("remove-search")
     search.classList.add("hide");
   })
 
-// shop page product view toggle
-// const products = document.getElementById("products");
-// const gridView = document.getElementById("gridView");
-// const listView = document.getElementById("listView");
-//   function grid() {
-//     gridView.classList.add("active");
-//     listView.classList.remove("active");
-//     products.classList.remove("shop-page-product");
-//   }
+  // account card toogle 
+  document.querySelector("#loginCardLink").
+    addEventListener("click", (e)=>{
+        e.preventDefault();
+        document.querySelector("#loginCard").classList.
+          toggle("hide");
+    })
 
-//   function list() {
-//     gridView.classList.remove("active");
-//     listView.classList.add("active");
-//     products.classList.add("shop-page-product");
-//   }
-
-//crousel
-// const crousel= document.getElementsByClassName("crousel-page");
-// const dot = document.getElementsByClassName("dot");
-
-// let crouselLng = crousel.length;
-// let dotLng = dot.length;
-// let index = 0;
-
-// function currentCrousel(index){
-//     if (index >= crouselLng) {
-//         index=0;
-//     }
-//     if (index < 0){
-//         index = crouselLng;
-//     }
-//     for (let i=0; i < crouselLng; i++ ){
-//         crousel[i].style.display="none";
-//         dot[i].classList.remove("active");
-//     }
-//     crousel[index].style.display = "flex";
-//     dot[index].classList.add("active");
-// }
-
-// (function automatic(){
-//    if (index >= crouselLng) {
-//         index=0;
-//     }
-//     if (index < 0){
-//         index = crouselLng;}
-
-//     currentCrousel(index);
-//     index++;
-//     setTimeout(automatic,5000);
-// })();
 
 // shop page selector
 const arrows = document.querySelectorAll(".select .fa-caret-down" );
@@ -198,6 +156,15 @@ open.forEach(open => {
 function unhide(e){
   const grandparent = e.target.parentNode.parentNode;
   grandparent.querySelector(".checkout-card").classList.toggle("hide");
+  if(e.target.checked){
+    grandparent.querySelectorAll("input").forEach(ele=> {
+      ele.setAttribute("required", "true");
+    })
+  }else{
+    grandparent.querySelectorAll("input").forEach(ele=> {
+      ele.removeAttribute("required");
+    })
+  }
 }
 
 //cart 
@@ -360,4 +327,16 @@ function changeImage(div) {
   const newImage = div.childNodes[1].src ;
   image.src = newImage;
 
+}
+
+//ajax message box delete
+function deleteNode(param){
+  param.parentNode.remove();
+}
+
+function messageBox(text, prop){
+  const clone = document.querySelector("#ajaxMsg").content.cloneNode("true");
+  clone.querySelector(".msgText").innerHTML = text;
+  clone.querySelector(".msg").classList.add(prop);
+  document.body.append(clone);
 }

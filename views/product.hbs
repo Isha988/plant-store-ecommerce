@@ -20,14 +20,15 @@
                         <p>{{this.name}}</p>
                         <h3>${{this.price}}</h3>
                         <div id="rating">
-                            <div id="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                            <div id="stars" class="stars">
+                                {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                                    <i class="fas fa-star"></i>
+                                {{/for}}
+                                {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                                    <i class="far fa-star"></i>
+                                {{/for}}
                             </div>
-                            <span>[1 review]</span>
+                            <span>[<span class="commentCount">{{this.totalReview}}</span> review]</span>
                         </div>
                         
                     </div>
@@ -143,7 +144,7 @@
                 <div role ="tablist" class="row" id="tab-list">
                   <a href="" role="tab" aria-controls="information" id="info-tab" class=""> information </a>
                   <a href="" role="tab" aria-controls="description" id="des-tab" class="active"> description</a>
-                  <a href="" role="tab" aria-controls="review" id="rv-tab"  class=""> reviews<span>(3)</span> </a>
+                  <a href="" role="tab" aria-controls="review" id="rv-tab" data-id={{this.id}} class=""> reviews (<span class="commentCount">{{this.totalReview}}</span>)</a>
                 </div>
                 <div id="information" role="tabpanel" tabindex="0" aria-labelledby="info-tab" hidden>
                     {{#each this.information}}
@@ -157,66 +158,52 @@
                 <div id="description" role="tabpanel" tabindex="0" aria-labelledby="des-tab">
                     <p>{{this.longDesc}} </p>
                 </div>
-    
+            {{/each}}
                 <div id="review" role="tabpanel" tabindex="0" aria-labelledby="rv-tab" hidden>
                     <div id="comment">
-                        <h1>Comments <span>(03)</span></h1>
-                        <div class="comment row">
-                            <img src="images/comment 1.jpg" alt="">
-                            <div class="user-data">
-                                <h2> Donald Chavez </h2> 
-                                <p class="sub">21 July 2021</p>
-                                <p class="review">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Soluta consequuntur quaerat architecto ipsa error dolore.
-                                </p>
-                                <a href="" class="btn">reply</a>
-                            </div>
-                        </div>
-    
-                        <div class="comment row">
-                            <img src="images/comment 2.jpg" alt="">
-                            <div class="user-data">
-                                <h2> Donald Chavez </h2> 
-                                <p class="sub">21 July 2021</p>
-                                <p class="review">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                     Error consectetur inventore aliquid sunt debitis
-                                      omnis nam dolor nulla dicta maiores.
-                                </p>
-                                <a href="" class="btn">reply</a>
-                            </div>
-                        </div>
-    
-                        <div class="comment row">
-                            <img src="images/comment 3.jpg" alt="">
-                            <div class="user-data">
-                                <h2> Donald Chavez </h2> 
-                                <p class="sub">21 July 2021</p>
-                                <p class="review">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                     Tenetur distinctio id reiciendis, voluptatum temporibus
-                                      alias totam impedit vel?
-                                </p>
-                                <a href="" class="btn">reply</a>
-                            </div>
-                        </div>
+                        <h1>Comments (<span id="commentCount" class="commentCount">0</span>)</h1>
+                        <div id="commentCover">
+                             No comment yet
+                        </div>    
                   </div>
 
                   <div id="post-comment">
                     <h1>Leave a comment</h1>
-                    <form id="comment" action="" class="form">
-                        <input type="text" placeholder="your name*" pattern="[A-Za-z]+[A-Za-z]*" required="required">
-                        <input type="email" placeholder="your email*"  required="required">
-                        <input type="text" placeholder="subject (optional)">
-                        <textarea name="" id="" cols="30" rows="5" placeholder="message"   required="required"></textarea>
-                        <input type="submit" value="post comment" class="btn formBtn">
-                    </form>
+                    {{#if user}}
+                        {{#each product}}
+                            <form id="commentForm" class="form" method="POST" data-id={{this.id}}>
+                                <div id="commentRating">
+                                    <input type="radio" name="stars" value= 5 id="rate-5" class="ratingStar" autocomplete="off">
+                                    <label for="rate-5" class="fas fa-star"></label>
+
+                                    <input type="radio" name="stars" value= 4 id="rate-4" class="ratingStar"  autocomplete="off">
+                                    <label for="rate-4" class="fas fa-star"></label>
+
+                                    <input type="radio" name="stars" value= 3 id="rate-3" class="ratingStar"  autocomplete="off">
+                                    <label for="rate-3" class="fas fa-star"></label>
+
+                                    <input type="radio" name="stars" value= 2 id="rate-2" class="ratingStar"  autocomplete="off">
+                                    <label for="rate-2" class="fas fa-star"></label>
+
+                                    <input type="radio" name="stars" value= 1 id="rate-1" class="ratingStar"  autocomplete="off">
+                                    <label for="rate-1" class="fas fa-star"></label>
+                                </div>
+
+                                <textarea name="comment" id="" cols="30" rows="5" placeholder="message" autocomplete="off"></textarea>
+                                <input type="submit" value="post comment" class="btn formBtn">
+                            </form>
+                        {{/each}}
+                    {{else}}
+                        <div class="no-user">
+                            <div class="text">please login </div>
+                            <a href="/login" class="btn no-user-link"> login </a>
+                        </div>
+                    {{/if}} 
                   </div>
                 </div>
             </div>
         </div>
-        {{/each}}
+       
 
         <div class="product-section inner" id="new">
             <h1 class="heading"> related products </h1>
@@ -300,5 +287,19 @@
                 </div>
             </div>
         </div>
-    
+    <template id="commentTemplate">
+        <div class="comment row">
+            <img src="images/comment.jpg" alt="">
+            <div class="user-data">
+                <h2></h2> 
+                <p class="sub">21 July 2021</p>
+                <div class="stars"></div>
+                <p class="review">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                    Soluta consequuntur quaerat architecto ipsa error dolore.
+                </p>
+            </div>
+        </div>
+    </template>
+    <script src="product.js" defer type="text/javascript"></script>
        

@@ -2,29 +2,48 @@ const express = require('express');
 const router = express.Router();
 
 const bcrypt = require ('bcryptjs'); 
-const { check, validationResult} = require('express-validator');
+const { check, validationResult, body} = require('express-validator');
 const users = require("../models/user");
+const cart = require("../models/cart");
+const wishlist = require("../models/wishlist");
+const order = require("../models/order");
+const user = require('../models/user');
 
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
-      return next();
+      return next(); 
     }
     req.flash('error', 'please login first')
     res.redirect('/login');// if not auth
 }
 
 //account page
-router.get("/account" , ensureAuthenticated, (req, res)=> {
+router.get("/account" , ensureAuthenticated, async (req, res)=> {
+  try{
+    const userCart = await cart.findOne({user: req.user.id}).populate({path : 'items',
+    populate: { path: 'plant' }});
+
+    const userOrders = await order.find({user: req.user.id}).sort({date : -1});
+
+    const userWishlist = await wishlist.findOne({user: req.user.id}).populate("items");
+
     res.render('my account',{
       title: 'my account',
-      tab: 'dashboard'
+      tab: 'dashboard',
+      cart : userCart,
+      wishlist : userWishlist,
+      order : userOrders
   });
+  }
+  catch(err){
+      res.status(501).json(err.message);
+  }
 })
 
 
 //profile changes
 router.post(
-  "/update",
+  "/account",ensureAuthenticated,
   check('firstName', 'name required and can only contain alphabets').trim().notEmpty().isAlpha(),
   check('lastName', "last name can only contain alphabets").
     custom ( value => {
@@ -49,6 +68,7 @@ router.post(
     if(!gender) return true;
     if(gender.match(/^male$/i) || gender.match(/^female$/i)) return true;
   }),
+  check("phoneNumber", "not a valid phone number").isMobilePhone(),
   check('password').custom(async (password, {req}) => {
       if (!password) return true;
 
@@ -94,6 +114,9 @@ router.post(
       if(user.email != req.body.email){
         user.email = req.body.email;
       }
+      if(user.phoneNumber != req.body.phoneNumber){
+        user.phoneNumber = req.body.phoneNumber;
+      }
       if(user.gender != req.body.gender){
         user.gender = req.body.gender || "";
       }
@@ -137,6 +160,62 @@ router.post(
   }
  
 );
+
+//address updation 
+router.post(
+  "/addressUpdate", ensureAuthenticated ,async (req, res) => {
+    try{
+      const user = req.user;
+      const body = req.body;
+      
+      user.shippingAddress = {
+        country: body.sCountry,
+        state : body.sState,
+        city : body.sCity,
+        pin : body.sPin,
+        address : body.sAddress
+      };
+
+      user.billingAddress = {
+        country: body.bCountry,
+        state : body.bState,
+        city : body.bCity,
+        pin : body.bPin,
+        address : body.bAddress
+      };
+      await user.save();
+      req.flash("success", "addresses updated successfully");
+      res.redirect("/user/account");
+    }
+    catch(err){
+      req.flash("error", "error in updating address! try again later");
+      res.redirect("/user/account");
+    }
+  }
+  
+)
+
+router.get("/order/:id", async(req,res)=>{
+  try {
+    const reqOrder = await order.findOne({user: req.user.id,
+      id: req.params.id}).populate({path : 'items',
+      populate: { path: 'plant' }});
+      console.log(reqOrder);
+    if(reqOrder){
+      res.render("order", {
+        title: "order",
+        order : reqOrder
+      })
+    }else {
+      res.render("error", {
+        title: "error"
+      })
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+})
 
 
 

@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const {userRouter, ensureAuthenticated} = require("./userAccount.js");
+const adminRouter = require("./admin.js");
 const bcrypt = require ('bcryptjs'); 
-const { check, validationResult} = require('express-validator');
+const { check,body, validationResult} = require('express-validator');
 const passport = require('passport');
 
 const nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 
-router.use("/user", userRouter);
+router.use("/user", userRouter); 
+router.use("/admin", adminRouter); 
 require('dotenv').config();
 const GMAIL_USER = process.env.MAIL;
 const GMAIL_PASS = process.env.PASSWORD;
@@ -19,11 +21,12 @@ const plant = require('../models/plant');
 const users = require('../models/user');
 const carts = require('../models/cart');
 const wishlists = require('../models/wishlist');
+const orders = require("../models/order");
+const comment = require("../models/comment");
 
 
 //helpers
 const hbs= require("hbs");
-const cart = require('../models/cart');
 hbs.registerHelper("display",(option, value) =>{
    return option.categories.some(ele => ele == value);
   });
@@ -51,10 +54,12 @@ hbs.registerHelper( "cal",function(operand_1, operator, operand_2) {
      'sub': function(l,r) { return Number(l) - Number(r); },
      'div': function(l,r) { return Number(l) / Number(r); },
      'mul': function(l,r) { return Number(l) * Number(r); },
+     'rDiv': function(l,r){ const ans = this.div(l,r)
+        if(isNaN(ans)) { return Number(0)};
+        return Math.round(ans);}
      
     }
     , result = operators[operator](operand_1,operand_2);
-  
     return result;
 });
 
@@ -69,6 +74,11 @@ hbs.registerHelper('for', function(from, to, incr, block) {
 hbs.registerHelper('var' , function (variable, value) {
     variable = value
     return variable;
+});
+
+hbs.registerHelper('stringify' , function (array) {
+    const string =  array.join();
+    return string;
 });
 
 //static
@@ -106,49 +116,6 @@ function connectMailer(){
           });
     })
 }
-//payment
-router.post('/create-checkout-session', async (req, res) => {
-
-    const user = req.user;
-    let list ;
-    carts.findOne({user: user.id}, (err, cart)=> {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            list = carts.items.map(item => {
-                return {
-                    price_data : {
-                        currency: "INR",
-                        product_data: {
-                            name: item.name
-                        },
-                        unit_amount: item.price
-                      }, 
-                      quantity: item.unit   
-                    }  
-                }
-                
-            );
-        }
-
-});
-    const session = await stripe.checkout.sessions.create({
-  
-      line_items: `${list}`,
-  
-      mode: 'payment',
-  
-      success_url: `${process.env.SERVER_URL}/`,
-  
-      cancel_url: `${process.env.SERVER_URL}/cart`,
-  
-    });
-  
-  
-    res.redirect(session.url);
-  
-  });
 
 //home page route
 router.get('/', (req, res) => {
@@ -175,7 +142,7 @@ router.get('/cartSmall',(req, res) => {
     if(user) {
         carts.findOne({user: user.id}).
         populate({path : 'items',
-            populate: { path: 'plant' }}). 
+        populate: { path: 'plant' }}). 
         exec((err, cart)=> {
             if(err) {
                 console.log(err);
@@ -234,14 +201,15 @@ router.get("/cart/:name", (req,res) =>{
                     total: plant.price
                 }
                  
-                carts.findOne({user: user.id}, (err, cart) => {
+                carts.findOne({user: user.id}).populate({path : 'items',
+                populate: { path: 'plant' }}). exec((err, cart) => {
                     if(err) {
                         console.log(err);
                     }
                     if (cart) {
                         let product = "";
                         cart.items.forEach(ele => {
-                            if (ele.name == plant.name){
+                            if (ele.plant.name == plant.name){
                                 product = ele.name;
                             }
                         });
@@ -336,7 +304,10 @@ router.post('/updateCart', (req, res) => {
 // checkout page
 router.get('/checkout', ensureAuthenticated, (req, res) => {
     const user = req.user;
-    carts.findOne({user: user.id}, (err, cart)=> {
+    carts.findOne({user: req.user.id}).
+        populate({path : 'items', 
+        populate: { path: 'plant' }}).
+        exec((err, cart)=> {
         if(err) {
             console.log(err);
         }
@@ -349,9 +320,116 @@ router.get('/checkout', ensureAuthenticated, (req, res) => {
     })
 });
 
+//payment
+router.post('/create-checkout-session', 
+    check("bCountry", "country is required").trim().notEmpty().isAlpha(),
+    check("bFirst", "first name is required").trim().notEmpty().isAlpha(),
+    check("bAddress", "address is required").trim().notEmpty(),
+    check("bCity", "city is required").trim().notEmpty().isAlpha(),
+    check("bState", "State is required").trim().notEmpty().isAlpha(),
+    check("bPin", "Pin is required").trim().notEmpty().isNumeric(),
+    check("phone", "Phone is required").trim().notEmpty().isMobilePhone(),
+    check("sCountry", "shipping country is required").if(body('shipCheckBox').exists()).trim().notEmpty().isAlpha(),
+    check("sFirst", "shipping first name is required").if(body('shipCheckBox').exists()).trim().notEmpty().isAlpha(),
+    check("sAddress", "shipping address is required").if(body('shipCheckBox').exists()).trim().notEmpty(),
+    check("sCity", "shipping city is required").if(body('shipCheckBox').exists()).trim().notEmpty().isAlpha(),
+    check("sState", "shipping State is required").if(body('shipCheckBox').exists()).trim().notEmpty().isAlpha(),
+    check("sPin", "shipping Pin is required").if(body('shipCheckBox').exists()).trim().notEmpty().isNumeric(),
+    check("sEmail", "shipping email is required").if(body('shipCheckBox').exists()).trim().notEmpty().isEmail(),
+    check("sPhone", "shipping Phone is required").if(body('shipCheckBox').exists()).trim().notEmpty().isMobilePhone(),
+    async (req, res) => {
+    const errors = validationResult(req);
+    const cart = await carts.findOne({user: req.user.id}).populate({path : 'items',
+        populate: { path: 'plant' }});
+    if (!errors.isEmpty()){
+        res.render("checkout",{
+            title : "checkout",
+            user: req.user,
+            errors: errors,
+            cart: cart
+        }
+        )
+    }
+    else {
+        let currency = "USD";
+        let amountMultipler = 100;
+        if(req.body.bCountry.match(/^india$/i)){
+            currency = "INR";
+            amountMultipler = 100*75.20
+        }
+        const list = cart.items.map((item)=>{
+            return {
+            
+                price_data : {
+                    currency: currency,
+                    product_data: {
+                        name: item.plant.name
+                    },
+                    unit_amount: item.plant.price*amountMultipler
+                }, 
+                quantity: item.unit
+                } 
+        })
+    
+        const session = await stripe.checkout.sessions.create({
+                
+        customer_email: req.user.email, 
+        
+        billing_address_collection: 'auto',
+            
+        line_items: await list,
+    
+        mode: 'payment',
+    
+        success_url: `${process.env.SERVER_URL}/checkoutSuccess`,
+    
+        cancel_url: `${process.env.SERVER_URL}/failure`,  
+        });
+    
+    
+        res.redirect(session.url);
+    }
+  
+  });
+
+  router.get("/checkoutSuccess", async(req, res)=> {
+    try{
+        const cart =  await carts.findOne({user: req.user.id});
+
+        const newOrder = new orders({
+            user: req.user.id,
+            items: cart.items,
+            totalItem : cart.totalItem,
+            total : cart.total
+        });
+
+        await newOrder.save();
+
+        cart.items =[];
+        cart.totalItem =0;
+        cart.total = 0;
+        await cart.save();
+
+        res.redirect("/thankYou");
+    }catch(err){
+        res.status(501).json(err.message);
+    }
+  })
+
+  router.get("/thankYou", (req,res)=> {
+      res.render("thankYou", {
+          title : "Thank You"
+      });
+  })
+
+  router.get("/failure", (req,res)=> {
+    res.render("failure", {
+        title : "failure"
+    });
+})
+
 /// contact page
 router.get('/contact', (req, res) => {
-    const user = req.user;
     res.render('contact',{title: 'contact'});
 });
 
@@ -405,7 +483,7 @@ router.get('/login', (req, res) => {
 // registration 
 router.post(
     '/register',
-    check('firstName', 'name required').trim().notEmpty().isAlpha(),
+    check('firstName', 'name only can contain aphabets').trim().notEmpty().isAlpha(),
     check('lastName', "last name can only contain alphabets").
     custom ( value => {
       if(!value) {
@@ -430,6 +508,7 @@ router.post(
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
+        minSymbols:0,
         maxLength: 15
     }),
     check('confirmPassword').custom((value, { req }) => {
@@ -456,18 +535,24 @@ router.post(
         });
           
         bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(newUser.password, salt, function(err, hash) {
-        newUser.password = hash;
-        newUser.save(err => {
-            if(err){
-                res.flash("error", "try again");
-                res.redirect('/login');
-            }
-            else{
-                req.flash('success', 'you are now registered');
-                res.redirect('/');
-            }
-        });
+            bcrypt.hash(newUser.password, salt, function(err, hash) {
+            newUser.password = hash;
+            newUser.save(err => {
+                if(err){
+                    res.flash("error", "try again");
+                    res.redirect('/login');
+                }
+                else{
+                    req.flash('success', 'you are now registered');
+                    passport.authenticate("local", {
+                        failureRedirect: '/login',
+                        failureFlash: true,
+                        successFlash: true
+                    })(req, res, function () {
+                        res.redirect("/");
+                    })
+                }
+                });
             });
         });
     }
@@ -476,9 +561,9 @@ router.post(
 //login form 
 
 router.post('/login', passport.authenticate('local', {
-    // successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true
+    failureFlash: true,
+    successFlash: true
   }), (req, res) => {
     if ( req.body.remember ) {
       req.session.cookie.originalMaxAge = 30*24*60*60*1000 // Expires in 30 days
@@ -678,6 +763,8 @@ hbs.registerHelper("urlStr", function(oldUrl, prop, val) {
     let qs = queryString.stringify(queryobj);
     return qs;
 });
+
+
 // shop page
 router.get('/shop', (req, res) => {
     const query = req.query;
@@ -743,6 +830,19 @@ router.get('/shop', (req, res) => {
         })
 });
 
+//search 
+router.post("/search", async (req,res)=>{
+    try{
+        const search = req.body.search;
+        const searchResult = await plant.find({
+            name : {$regex: new RegExp(`\\b${search}`, "i") }
+        });
+        res.send(JSON.stringify(searchResult));
+    }catch(err){
+        console.log(err);
+    }
+})
+    
 // wishlist page
 router.get('/wishlist', ensureAuthenticated, (req, res) => {
     const user = req.user;
@@ -780,7 +880,7 @@ router.get("/wishlist/:name", (req,res) =>{
             }
             if(plant){
                 const newItem = plant._id;
-                wishlists.findOne({user: user.id}, (err, wishlist) => {
+                wishlists.findOne({user: user.id}).populate("items").exec((err, wishlist) => {
                     if(err) {
                         console.log(err);
                     }
@@ -848,8 +948,55 @@ router.delete("/wishlist/:id", (req,res) => {
 
     })
 })
+//fetch comment
+router.get("/comment/:id", async(req, res) => {
+    try{
+        const comments = await comment.find({product : req.params.id}).sort({_id: -1}).populate("user", {firstName : 1, lastName:1, gender:1});
+        let prevComment ;
+        if(req.user){
+            prevComment = await comment.findOne({product : req.params.id, user: req.user.id}).populate("user", {firstName : 1, lastName:1, gender:1});
+        }
+        res.send({
+            comments : comments,
+            prevComment : prevComment
+        })
+    }catch(error){
+        res.status(500).json("error");
+    }
+})
 
+// add comment 
+router.post("/comment/:id", ensureAuthenticated, async(req,res)=> {
+    const productId = req.params.id;
+    const user = req.user;
+    const product = await plant.findOne({id: productId});
+    if(!product) {
+       res.status(400);
+       throw new Error("no product found");
+    }
+    const preComment = await comment.findOne({user: user.id, product : productId});
+    if(preComment) {
+        res.send({msg : "You have already reviewed this product"});
+    }else{
+    const newComment = new comment({
+        user: user.id,
+        product : productId,
+        stars : req.body.stars,
+        comment : req.body.comment
+    });
+    const addedComment = await newComment.save();
+    const populatedcomment = await addedComment.populate("user", {firstName : 1, lastName:1, gender:1}); 
+    const updatedProduct = await plant.findOneAndUpdate({_id: productId},{$inc : {totalStar : req.body.stars , totalReview: 1}}, {new:true} )
 
+    res.send({
+        comment: populatedcomment,
+        review: updatedProduct.totalReview,
+        star: updatedProduct.totalStar,
+        msg: "comment added successfully"
+    });}
+})
+
+// page not found
 router.get('*', function(req, res){
     if(res.status(404)){
         res.render('error', {

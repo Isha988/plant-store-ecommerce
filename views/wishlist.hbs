@@ -19,8 +19,8 @@
                    
                     <tr>
                         <td class="remove"> <a href="" data="{{this.id}}"> x </a> </td>
-                        <td class="img"> <a href=""> <img src= {{this.src.[0]}} alt=""> </a></td>
-                        <td class="name"> <a href="" >{{this.name}}</a> </td>
+                        <td class="img"> <a href="/shop/product/{{this.name}}"> <img src= {{this.src.[0]}} alt=""> </a></td>
+                        <td class="name"> <a href="/shop/product/{{this.name}}" >{{this.name}}</a> </td>
                         <td class="price"> ${{this.price}} </td>
                         <td class="stock"> in stock </td>
                         <td class="cart"><button onclick="addToCart('{{this.name}}')" class="btn b"> add to cart</button></td>

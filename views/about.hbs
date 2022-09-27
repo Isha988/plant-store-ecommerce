@@ -4,14 +4,11 @@
             <div class="inner">
             <h2>our <span>story</span></h2>
             <p>
-                Lorem ipsum dolor sit amet consectetur, 
-                adipisicing elit. Rem vitae natus quibusdam explicabo 
-                aut similique sunt maiores alias odit cupiditate voluptatem, 
-                tempora necessitatibus rerum possimus iste hic ratione tempore aperiam?
-                Lorem ipsum dolor sit amet consectetur, 
-                adipisicing elit. Rem vitae natus quibusdam explicabo 
-                aut similique sunt maiores alias odit cupiditate voluptatem, 
-                tempora necessitatibus rerum possimus iste hic ratione tempore aperiam?
+                Plantza is a platform for Urban India to stay close to nature. 
+                Every city turning into a concrete jungle now, 
+                Plantza offers unique solutions for every person with beautiful plants, 
+                pots and decorative knick-knacks to create your green patch. We strive to be the 
+                perfect Urban solution with our unique products developed keeping you in mind
             </p>
             <img src="images/sign.png" alt="">
             </div>
@@ -91,7 +88,7 @@
                 Contrary to popular belief, Lorem Ipsum is not simply random text.
                 It has roots<br> in a piece of classical Latin literature
             </p>
-            <div id="team-member" class="row" style="gap:0">
+            <div id="team-member" class="row inner" style="gap:0">
                 <div class="member">
                     <div class="img">
                         <img src="images/comment 4.webp" alt="">
@@ -103,37 +100,37 @@
                     <h3 class="name">micheal murphy</h3>
                     
                 </div>
-                <div class="member">
+                <div class="member up">
                     <div class="img">
                         <img src="images/comment 3.jpg" alt="">
                         <div class="profile">
-                            <h3>micheal murphy</h3>   
+                            <h3>kari rasmus</h3>   
                             <p>sales man</p>
                         </div>
                     </div>
-                    <h3 class="name">micheal murphy</h3>
+                    <h3 class="name">kari rasmus</h3>
                     
                 </div>
                 <div class="member">
                     <div class="img">
-                        <img src="images/comment 2.jpg" alt="">
+                        <img src="images/commentmale.jpg" alt="">
                         <div class="profile">
-                            <h3>micheal murphy</h3>   
+                            <h3>Britney Cooper</h3>   
                             <p>sales man</p>
                         </div>
                     </div>
-                    <h3 class="name">micheal murphy</h3>
+                    <h3 class="name">Britney Cooper</h3>
                     
                 </div>
-                <div class="member">
+                <div class="member up">
                     <div class="img">
-                        <img src="images/comment 1.jpg" alt="">
+                        <img src="images/commentfemale.jpg" alt="">
                         <div class="profile">
-                            <h3>micheal murphy</h3>   
+                            <h3>Marissa Swan</h3>   
                             <p>sales man</p>
                         </div>
                     </div>
-                    <h3 class="name">micheal murphy</h3>
+                    <h3 class="name">Marissa Swan</h3>
                     
                 </div>
             </div>
@@ -141,25 +138,53 @@
 
         <div id="brand-section">
             <div class="inner">
-             <div id="brand" class="row-2">
-                 <a href="home.html" class="brand">
-                     <img src="images/brand 1.png" alt="">
-                 </a>
-                 <a href="home.html" class="brand">
-                     <img src="images/brand 2.png" alt="">
-                 </a>
-                 <a href="home.html" class="brand">
-                     <img src="images/brand 3.png" alt="">
-                 </a>
-                 <a href="home.html" class="brand">
-                     <img src="images/brand 4.png" alt="">
-                 </a>
-                 <a href="home.html" class="brand">
-                     <img src="images/brand 5.png" alt="">
-                 </a>
-             </div>
-         </div>
+                    <div class="brand-swiper">
+                        <div id="brand" class="swiper-wrapper">
+                            <a href="#" class="brand swiper-slide">
+                                <img src="images/brand 1.png" alt="">
+                            </a>
+                            <a href="#" class="brand swiper-slide">
+                                <img src="images/brand 2.png" alt="">
+                            </a>
+                            <a href="#" class="brand swiper-slide">
+                                <img src="images/brand 3.png" alt="">
+                            </a>
+                            <a href="#" class="brand swiper-slide">
+                                <img src="images/brand 4.png" alt="">
+                            </a>
+                            <a href="#" class="brand swiper-slide">
+                                <img src="images/brand 5.png" alt="">
+                            </a>
+                        </div>
+                    </div>
             </div>
-     </div>
+        </div>
+
+        <script  src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script>
+            const brandSwiper = new Swiper(".brand-swiper", {
+                slidesPerView: 2,
+                spaceBetween: 50,
+                loop: true,
+                breakpoints: {
+                500: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+                980: {
+                    slidesPerView: 4,
+                    spaceBetween: 60,
+                },
+                1200: {
+                    slidesPerView: 5,
+                    spaceBetween: 60,
+                },
+                },
+                autoplay: {
+                    delay: 5000,
+                },
+            });
+
+        </script>
 
        

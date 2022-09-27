@@ -1,0 +1,16 @@
+    {{>pageInfo}}
+               <div class="inner" id="forms">
+                    <div  class="signup" >
+                        <h2>login</h2>
+                        <form action="/admin/login" class="form" method="POST">
+                            <label for="email" >admin email address</label>
+                            <input type="email" placeholder="email address"  name="email" autocomplete="off" required>
+                            <label for="password" >admin password</label>
+                            <input type="password" placeholder="password" name ="password" required>
+                            <label for="" class="extra">
+                                <input type="checkbox" name="remember" id="">
+                                remember me</label>
+                            <input type="submit" value="login" class="btn">
+                        </form>
+                    </div>
+               </div>

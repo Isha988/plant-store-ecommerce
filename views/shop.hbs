@@ -8,7 +8,8 @@
                             <p> 
                                 <span style="color: #abd373">{{cal count "sub" (cal current "mul" 5)}} </span>
                                 product found of 
-                                <span style="color: #abd373">{{count}}</span></p>
+                                <span style="color: #abd373">{{count}}</span>
+                            </p>
                         </div>
                         <a href="/shop?{{urlStr url 'view' 'grid'}}" class="category views {{#if (when query.view 'noteq' 'list')}} active {{/if}} " id="gridView">
                            <i class="fas fa-th"></i>
@@ -30,32 +31,38 @@
         
             
                     <div class="row product-div {{#if (when query.view 'eq' 'list')}} list-view {{/if}}" id="products">
-                        {{#each plant}}
-                        <div class="product">
-                            <a href="/shop/product/{{this.name}}">
-                                <img src={{this.src.[0]}} alt="" height="250">
-                            </a>
-                            <div class="product-content"> 
-                                <div class="hide">
-                                    <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
-                                    <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
-                                    <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                        {{#if plant}}
+                            {{#each plant}}
+                                <div class="product">
+                                    <a href="/shop/product/{{this.name}}">
+                                        <img src={{this.src.[0]}} alt="" height="250">
+                                    </a>
+                                    <div class="product-content"> 
+                                        <div class="hide">
+                                            <i class="fas fa-shopping-cart" onclick="addToCart('{{this.name}}')"></i>
+                                            <a href="/shop/product/{{this.name}}"><i class="far fa-eye"></i></a>
+                                            <i class="fas fa-heart" onclick="addToWishlist('{{this.name}}')"></i>
+                                        </div>
+                                        <div class="product-decription"> 
+                                            <p class="sub" hidden>{{this.shortDesc}} </p>
+                                        </div>
+                                        <div class="product-text">
+                                            <p>{{this.name}}</p>
+                                            <h3>${{this.price}}</h3>
+                                            {{#for 1 (cal this.totalStar 'rDiv' this.totalReview) 1 }}
+                                                <i class="fas fa-star"></i>
+                                            {{/for}}
+                                            {{#for 1 (cal 5 "sub" (cal this.totalStar 'rDiv' this.totalReview)"" ) 1 }}
+                                                <i class="far fa-star"></i>
+                                            {{/for}}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="product-decription"> 
-                                    <p class="sub" hidden>{{this.shortDesc}} </p>
-                                </div>
-                                <div class="product-text">
-                                    <p>{{this.name}}</p>
-                                    <h3>${{this.price}}</h3>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        {{/each}}
+                            {{/each}}
+                        
+                            {{else}}
+                                no product found
+                        {{/if}}
                     </div>
                     <div id= "pagination" class="row categories-section">
                         

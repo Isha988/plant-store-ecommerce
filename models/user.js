@@ -5,6 +5,9 @@ const userSchema = Schema({
     firstName: {
         type: String
     },
+    role: {
+        type:String
+    },
     lastName: {
         type: String
     },
@@ -14,14 +17,25 @@ const userSchema = Schema({
     email: {
         type: String
     },
+    phoneNumber: {
+        type: Number
+    },
     password:{
         type: String
     },
     billingAddress: {
-        type: String
+        country: String,
+        state: String,
+        city: String,
+        pin: String,
+        address: String
     },
     shippingAddress: {
-        type: String
+        country: String,
+        state: String,
+        city: String,
+        pin: String,
+        address: String
     },
     resetToken:{
         type: String
